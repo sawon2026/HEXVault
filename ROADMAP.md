@@ -10,10 +10,10 @@
 - [x] Baseline unit tests
 - [x] GitHub excellence pack
 
-## v1.1 — DX
+## Shipped (v1.1 — DX)
+- [x] REST API (`/memories`, `/search`, `/review`, `/stats`)
+- [x] Real embedding providers (local + OpenAI)
 - [ ] Interactive TUI
-- [ ] Real embedding providers
-- [ ] REST API (`/memories`, `/search`, `/review`)
 - [ ] Coverage >70%
 
 ## v1.2 — AI Features
