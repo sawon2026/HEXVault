@@ -1,7 +1,7 @@
 {
   "name": "hexvault",
-  "version": "0.4.0",
-  "description": "Intelligent Project Memory Vault + Smart PR Reviewer for GitHub, GitLab & Bitbucket",
+  "version": "1.0.0",
+  "description": "Production AI Memory Platform + Smart PR Reviewer — hybrid search, multi-provider LLM, ranking, CI/CD",
   "type": "module",
   "bin": {
     "hexvault": "./dist/cli/index.js"
@@ -13,6 +13,7 @@
     "action": "tsx src/action/index.ts",
     "dashboard": "tsx src/dashboard/server.ts",
     "test": "vitest run",
+    "test:watch": "vitest",
     "lint": "eslint src --ext .ts"
   },
   "keywords": [
@@ -25,7 +26,9 @@
     "project-memory",
     "github-action",
     "gitlab",
-    "bitbucket"
+    "bitbucket",
+    "rag",
+    "vector-search"
   ],
   "author": "sawon2026",
   "license": "MIT",
