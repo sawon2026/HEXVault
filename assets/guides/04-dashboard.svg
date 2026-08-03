@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="500" viewBox="0 0 900 500">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/><stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="500" rx="16" fill="url(#bg)"/>
+  <text x="40" y="48" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#F8FAFC">Step 4 — Open Dashboard</text>
+  <rect x="40" y="62" width="140" height="3" rx="2" fill="url(#accent)"/>
+
+  <!-- Terminal hint -->
+  <rect x="40" y="85" width="820" height="50" rx="8" fill="#020617" stroke="#334155"/>
+  <text x="60" y="116" font-family="monospace" font-size="14" fill="#22D3EE">$</text>
+  <text x="80" y="116" font-family="monospace" font-size="14" fill="#E2E8F0">npm run dashboard</text>
+  <text x="320" y="116" font-family="system-ui,sans-serif" font-size="13" fill="#4ADE80">→ http://localhost:3847</text>
+
+  <!-- Browser mock -->
+  <rect x="40" y="155" width="820" height="310" rx="12" fill="#0F172A" stroke="#334155"/>
+  <rect x="40" y="155" width="820" height="36" fill="#1E293B"/>
+  <circle cx="62" cy="173" r="5" fill="#EF4444"/>
+  <circle cx="80" cy="173" r="5" fill="#F59E0B"/>
+  <circle cx="98" cy="173" r="5" fill="#22C55E"/>
+  <rect x="130" y="163" width="400" height="20" rx="4" fill="#0F172A"/>
+  <text x="145" y="177" font-family="system-ui,sans-serif" font-size="11" fill="#64748B">localhost:3847</text>
+
+  <text x="70" y="220" font-family="system-ui,sans-serif" font-size="18" font-weight="700" fill="#F8FAFC">🧠 HEXVault</text>
+  <text x="200" y="220" font-family="system-ui,sans-serif" font-size="13" fill="#94A3B8">Project Memory Dashboard</text>
+
+  <!-- Stat cards -->
+  <rect x="60" y="250" width="170" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+  <text x="80" y="280" font-family="system-ui,sans-serif" font-size="12" fill="#94A3B8">Total Memories</text>
+  <text x="80" y="310" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#38BDF8">12</text>
+
+  <rect x="250" y="250" width="170" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+  <text x="270" y="280" font-family="system-ui,sans-serif" font-size="12" fill="#94A3B8">Feedback Up</text>
+  <text x="270" y="310" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#4ADE80">8</text>
+
+  <rect x="440" y="250" width="170" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+  <text x="460" y="280" font-family="system-ui,sans-serif" font-size="12" fill="#94A3B8">Feedback Down</text>
+  <text x="460" y="310" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#F87171">1</text>
+
+  <rect x="630" y="250" width="170" height="80" rx="10" fill="#1E293B" stroke="#334155"/>
+  <text x="650" y="280" font-family="system-ui,sans-serif" font-size="12" fill="#94A3B8">Types</text>
+  <text x="650" y="310" font-family="system-ui,sans-serif" font-size="28" font-weight="700" fill="#A78BFA">5</text>
+
+  <text x="60" y="370" font-family="system-ui,sans-serif" font-size="13" fill="#94A3B8">Recent Memories</text>
+  <text x="60" y="400" font-family="system-ui,sans-serif" font-size="13" fill="#A78BFA">decision</text>
+  <text x="150" y="400" font-family="system-ui,sans-serif" font-size="13" fill="#E2E8F0">Use SQLite for local storage</text>
+  <text x="60" y="425" font-family="system-ui,sans-serif" font-size="13" fill="#F87171">bugfix</text>
+  <text x="150" y="425" font-family="system-ui,sans-serif" font-size="13" fill="#E2E8F0">Fixed race in auth middleware</text>
+  <text x="60" y="450" font-family="system-ui,sans-serif" font-size="13" fill="#FB923C">security</text>
+  <text x="150" y="450" font-family="system-ui,sans-serif" font-size="13" fill="#E2E8F0">Never hardcode API keys</text>
+</svg>

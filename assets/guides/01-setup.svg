@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/><stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="520" rx="16" fill="url(#bg)"/>
+  <text x="40" y="48" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#F8FAFC">Step 1 — Setup HEXVault</text>
+  <rect x="40" y="62" width="120" height="3" rx="2" fill="url(#accent)"/>
+
+  <!-- Terminal window -->
+  <rect x="40" y="90" width="820" height="380" rx="12" fill="#020617" stroke="#334155"/>
+  <circle cx="70" cy="118" r="7" fill="#EF4444"/>
+  <circle cx="94" cy="118" r="7" fill="#F59E0B"/>
+  <circle cx="118" cy="118" r="7" fill="#22C55E"/>
+  <text x="150" y="123" font-family="monospace" font-size="13" fill="#64748B">terminal — your-project</text>
+
+  <text x="60" y="170" font-family="monospace" font-size="15" fill="#94A3B8"># 1. Clone the repo</text>
+  <text x="60" y="200" font-family="monospace" font-size="15" fill="#22D3EE">$</text>
+  <text x="80" y="200" font-family="monospace" font-size="15" fill="#E2E8F0">git clone https://github.com/sawon2026/HEXVault.git</text>
+
+  <text x="60" y="240" font-family="monospace" font-size="15" fill="#94A3B8"># 2. Install dependencies</text>
+  <text x="60" y="270" font-family="monospace" font-size="15" fill="#22D3EE">$</text>
+  <text x="80" y="270" font-family="monospace" font-size="15" fill="#E2E8F0">cd HEXVault &amp;&amp; npm install</text>
+
+  <text x="60" y="310" font-family="monospace" font-size="15" fill="#94A3B8"># 3. Initialize in YOUR project folder</text>
+  <text x="60" y="340" font-family="monospace" font-size="15" fill="#22D3EE">$</text>
+  <text x="80" y="340" font-family="monospace" font-size="15" fill="#E2E8F0">cd /path/to/your-app</text>
+  <text x="60" y="370" font-family="monospace" font-size="15" fill="#22D3EE">$</text>
+  <text x="80" y="370" font-family="monospace" font-size="15" fill="#E2E8F0">npx tsx /path/to/HEXVault/src/cli/index.ts init</text>
+
+  <text x="60" y="420" font-family="monospace" font-size="15" fill="#4ADE80">✓ HEXVault initialized!</text>
+  <text x="60" y="445" font-family="monospace" font-size="13" fill="#64748B">  Created .hexvault.yml</text>
+  <text x="60" y="465" font-family="monospace" font-size="13" fill="#64748B">  Created .hexvault/memory.db</text>
+</svg>

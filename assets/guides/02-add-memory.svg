@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="480" viewBox="0 0 900 480">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/><stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="480" rx="16" fill="url(#bg)"/>
+  <text x="40" y="48" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#F8FAFC">Step 2 — Add Project Memories</text>
+  <rect x="40" y="62" width="160" height="3" rx="2" fill="url(#accent)"/>
+
+  <rect x="40" y="90" width="820" height="350" rx="12" fill="#020617" stroke="#334155"/>
+  <circle cx="70" cy="118" r="7" fill="#EF4444"/>
+  <circle cx="94" cy="118" r="7" fill="#F59E0B"/>
+  <circle cx="118" cy="118" r="7" fill="#22C55E"/>
+  <text x="150" y="123" font-family="monospace" font-size="13" fill="#64748B">terminal</text>
+
+  <text x="60" y="170" font-family="monospace" font-size="14" fill="#94A3B8"># Decision memory</text>
+  <text x="60" y="200" font-family="monospace" font-size="14" fill="#22D3EE">$</text>
+  <text x="78" y="200" font-family="monospace" font-size="13" fill="#E2E8F0">hexvault add "Use SQLite for local storage" --type decision --tags db</text>
+
+  <text x="60" y="245" font-family="monospace" font-size="14" fill="#94A3B8"># Bugfix memory (link files)</text>
+  <text x="60" y="275" font-family="monospace" font-size="14" fill="#22D3EE">$</text>
+  <text x="78" y="275" font-family="monospace" font-size="13" fill="#E2E8F0">hexvault add "Fixed race in auth" --type bugfix --files src/auth.ts</text>
+
+  <text x="60" y="320" font-family="monospace" font-size="14" fill="#94A3B8"># Search memories</text>
+  <text x="60" y="350" font-family="monospace" font-size="14" fill="#22D3EE">$</text>
+  <text x="78" y="350" font-family="monospace" font-size="13" fill="#E2E8F0">hexvault search "auth"</text>
+
+  <text x="60" y="395" font-family="monospace" font-size="14" fill="#A78BFA">[decision]</text>
+  <text x="155" y="395" font-family="monospace" font-size="14" fill="#E2E8F0"> Use SQLite for local storage</text>
+  <text x="60" y="420" font-family="monospace" font-size="14" fill="#F87171">[bugfix]</text>
+  <text x="155" y="420" font-family="monospace" font-size="14" fill="#E2E8F0"> Fixed race in auth</text>
+</svg>

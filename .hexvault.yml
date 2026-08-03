@@ -1,0 +1,18 @@
+# HEXVault Configuration
+memory:
+  path: .hexvault/memory.db
+  vector: false
+
+review:
+  model: rule-based
+  severity: medium
+  checks:
+    - security
+    - consistency
+    - best-practices
+
+ignore:
+  - "**/*.test.ts"
+  - "**/*.spec.ts"
+  - "docs/**"
+  - "node_modules/**"
