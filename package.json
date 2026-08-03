@@ -33,7 +33,7 @@
   "author": "sawon2026",
   "license": "MIT",
   "dependencies": {
-    "@actions/core": "^1.11.1",
+    "@actions/core": "^3.0.1",
     "@actions/github": "^6.0.0",
     "better-sqlite3": "^11.7.0",
     "chalk": "^5.4.1",
