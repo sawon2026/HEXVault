@@ -1,7 +1,7 @@
 {
   "name": "hexvault",
-  "version": "1.1.0",
-  "description": "Production AI Memory Platform + Smart PR Reviewer — REST API, hybrid search, multi-provider LLM",
+  "version": "1.2.0",
+  "description": "Production AI Memory Platform — REST API, repo chat, commit/release generators",
   "type": "module",
   "bin": {
     "hexvault": "./dist/cli/index.js"
@@ -22,13 +22,10 @@
     "pr-review",
     "memory",
     "ai",
-    "code-review",
     "hexvault",
-    "project-memory",
-    "github-action",
     "rest-api",
     "rag",
-    "vector-search"
+    "commit-message"
   ],
   "author": "sawon2026",
   "license": "MIT",
