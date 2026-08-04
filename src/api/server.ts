@@ -1,5 +1,5 @@
 /**
- * HEXVault REST API v1.2
+ * HEXVault REST API v1.2.1
  */
 import http from "http";
 import { URL } from "url";
@@ -11,6 +11,7 @@ import { log } from "../core/logging/logger.js";
 import { AppError, isAppError } from "../core/errors/app-error.js";
 import { generateCommitMessage, generateReleaseNotes } from "../core/ai/generators.js";
 import { repoChat } from "../core/ai/repo-chat.js";
+import { analyzeProject } from "../core/analysis/heuristics.js";
 
 const logger = log.child("api");
 
@@ -70,7 +71,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       const p = url.pathname.replace(/\/$/, "") || "/";
 
       if (req.method === "GET" && (p === "/health" || p === "/v1/health")) {
-        json(res, 200, { ok: true, service: "hexvault-api", version: "1.2.0" });
+        json(res, 200, { ok: true, service: "hexvault-api", version: "1.2.1" });
         return;
       }
       if (req.method === "GET" && p === "/v1/memories") {
@@ -129,6 +130,19 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         json(res, 200, engine.analytics());
         return;
       }
+      if (req.method === "GET" && p === "/v1/analyze") {
+        const report = await analyzeProject({
+          cwd,
+          topN: Number(url.searchParams.get("top") || 15),
+        });
+        json(res, 200, {
+          filesScanned: report.filesScanned,
+          summary: report.summary,
+          hotspots: report.hotspots,
+          deadCode: report.deadCode.slice(0, 50),
+        });
+        return;
+      }
       if (req.method === "POST" && p === "/v1/review") {
         const body = JSON.parse((await readBody(req)) || "{}");
         const title = String(body.title || "API review");
@@ -147,12 +161,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         const body = JSON.parse((await readBody(req)) || "{}");
         const question = String(body.question || body.q || "").trim();
         if (!question) throw new AppError("CONFIG_INVALID", "question is required", { statusCode: 400 });
-        const result = await repoChat({
-          engine,
-          question,
-          extraContext: body.context ? String(body.context) : undefined,
-        });
-        json(res, 200, result);
+        json(res, 200, await repoChat({ engine, question, extraContext: body.context ? String(body.context) : undefined }));
         return;
       }
       if (req.method === "POST" && p === "/v1/commit-message") {
@@ -164,15 +173,11 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       }
       if (req.method === "POST" && p === "/v1/release-notes") {
         const body = JSON.parse((await readBody(req)) || "{}");
-        json(
-          res,
-          200,
-          await generateReleaseNotes({
-            version: String(body.version || "v0.0.0"),
-            items: Array.isArray(body.items) ? body.items.map(String) : [],
-            projectName: body.projectName ? String(body.projectName) : "HEXVault",
-          })
-        );
+        json(res, 200, await generateReleaseNotes({
+          version: String(body.version || "v0.0.0"),
+          items: Array.isArray(body.items) ? body.items.map(String) : [],
+          projectName: body.projectName ? String(body.projectName) : "HEXVault",
+        }));
         return;
       }
 
@@ -182,6 +187,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
           "GET /health",
           "GET|POST /v1/memories",
           "GET /v1/search?q=",
+          "GET /v1/analyze",
           "POST /v1/review",
           "POST /v1/chat",
           "POST /v1/commit-message",
@@ -225,10 +231,8 @@ export function createApiServer(opts: ApiServerOptions = {}) {
 }
 
 if (process.argv[1]?.endsWith("server.ts") || process.argv[1]?.endsWith("server.js")) {
-  createApiServer()
-    .start()
-    .catch((e) => {
-      console.error(e);
-      process.exit(1);
-    });
+  createApiServer().start().catch((e) => {
+    console.error(e);
+    process.exit(1);
+  });
 }
