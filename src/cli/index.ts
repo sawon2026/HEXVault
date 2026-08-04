@@ -15,7 +15,7 @@ const program = new Command();
 program
   .name("hexvault")
   .description("HEXVault — Intelligent Project Memory + Smart PR Reviewer")
-  .version("1.2.0");
+  .version("1.2.1");
 
 program
   .command("init")
@@ -136,12 +136,20 @@ program
   .action(async (opts) => {
     let items: string[] = [];
     if (opts.file) {
-      items = fs.readFileSync(path.resolve(opts.file), "utf8").split(/\n/).map((l: string) => l.trim()).filter(Boolean);
+      items = fs
+        .readFileSync(path.resolve(opts.file), "utf8")
+        .split(/\n/)
+        .map((l: string) => l.trim())
+        .filter(Boolean);
     } else if (opts.items) {
       items = opts.items.split(",").map((s: string) => s.trim()).filter(Boolean);
     }
     if (!items.length) items = ["General improvements"];
-    const { notes, source } = await generateReleaseNotes({ version: opts.version, items, projectName: "HEXVault" });
+    const { notes, source } = await generateReleaseNotes({
+      version: opts.version,
+      items,
+      projectName: "HEXVault",
+    });
     console.log(notes);
     console.error(chalk.gray(`# source: ${source}`));
   });
@@ -161,6 +169,40 @@ program
       console.log(chalk.gray("\nSources:"));
       for (const s of result.sources.slice(0, 5)) {
         console.log(chalk.gray(`  - [${s.type}] ${s.title}`));
+      }
+    }
+  });
+
+program
+  .command("analyze")
+  .description("Complexity + dead-code heuristics")
+  .option("-n, --top <n>", "Top hotspot files", "15")
+  .action(async (opts) => {
+    const { analyzeProject } = await import("../core/analysis/heuristics.js");
+    const report = await analyzeProject({
+      cwd: process.cwd(),
+      topN: parseInt(opts.top, 10),
+    });
+    console.log(chalk.bold("\nHEXVault Analysis\n"));
+    console.log(`Files scanned: ${report.filesScanned}`);
+    console.log(`Avg complexity: ${report.summary.avgScore}/100`);
+    console.log(`Max complexity: ${report.summary.maxScore}/100`);
+    console.log(`Dead-code hints: ${report.summary.deadHints}`);
+    if (report.hotspots.length) {
+      console.log(chalk.bold("\nHotspots:\n"));
+      for (const h of report.hotspots.slice(0, 10)) {
+        console.log(
+          `  ${chalk.yellow(String(h.score).padStart(3))}  ${h.file}  (lines=${h.lines}, cyclo≈${h.cyclomaticApprox})`
+        );
+      }
+    }
+    const serious = report.deadCode.filter((d) =>
+      ["debugger", "empty-catch", "unused-export"].includes(d.kind)
+    );
+    if (serious.length) {
+      console.log(chalk.bold("\nNotable hints:\n"));
+      for (const d of serious.slice(0, 15)) {
+        console.log(`  ${d.file}:${d.line}  [${d.kind}] ${d.symbol}`);
       }
     }
   });
