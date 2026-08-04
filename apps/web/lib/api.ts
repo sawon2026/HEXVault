@@ -77,3 +77,19 @@ export async function addMemory(data: {
 }) {
   return post<Memory>("/v1/memories", data);
 }
+
+export async function fetchGraph(limit = 60) {
+  return get<{
+    nodes: {
+      id: string;
+      label: string;
+      kind: string;
+      memoryType?: string;
+      size: number;
+      x: number;
+      y: number;
+    }[];
+    edges: { source: string; target: string; kind: string; weight: number }[];
+    stats: { memories: number; types: number; tags: number; edges: number };
+  }>(`/v1/graph?limit=${limit}&w=900&h=560`);
+}
