@@ -1,13 +1,5 @@
 /**
- * HEXVault REST API — zero-dependency HTTP server.
- *
- * GET  /health
- * GET  /v1/memories | POST /v1/memories | GET /v1/memories/:id
- * GET  /v1/search?q=
- * POST /v1/review
- * GET  /v1/stats | GET /v1/analytics
- *
- * Optional auth: Authorization: Bearer <HEXVAULT_API_TOKEN>
+ * HEXVault REST API v1.2
  */
 import http from "http";
 import { URL } from "url";
@@ -17,18 +9,19 @@ import type { MemoryType } from "../core/memory/types.js";
 import { loadConfig } from "../config/index.js";
 import { log } from "../core/logging/logger.js";
 import { AppError, isAppError } from "../core/errors/app-error.js";
+import { generateCommitMessage, generateReleaseNotes } from "../core/ai/generators.js";
+import { repoChat } from "../core/ai/repo-chat.js";
 
 const logger = log.child("api");
 
 function json(res: http.ServerResponse, status: number, body: unknown) {
-  const payload = JSON.stringify(body, null, 2);
   res.writeHead(status, {
     "Content-Type": "application/json; charset=utf-8",
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Methods": "GET,POST,OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type, Authorization",
   });
-  res.end(payload);
+  res.end(JSON.stringify(body, null, 2));
 }
 
 function readBody(req: http.IncomingMessage): Promise<string> {
@@ -46,9 +39,7 @@ function checkAuth(req: http.IncomingMessage): void {
   const header = req.headers.authorization || "";
   const value = header.startsWith("Bearer ") ? header.slice(7) : "";
   if (value !== token) {
-    throw new AppError("PROVIDER_AUTH", "Invalid or missing API token", {
-      statusCode: 401,
-    });
+    throw new AppError("PROVIDER_AUTH", "Invalid or missing API token", { statusCode: 401 });
   }
 }
 
@@ -62,12 +53,10 @@ export function createApiServer(opts: ApiServerOptions = {}) {
   const port = opts.port ?? Number(process.env.HEXVAULT_API_PORT || 3850);
   const host = opts.host ?? process.env.HEXVAULT_API_HOST ?? "127.0.0.1";
   const cwd = opts.cwd ?? process.cwd();
-
   const config = loadConfig(cwd);
   const dbPath = path.isAbsolute(config.memory.path)
     ? config.memory.path
     : path.join(cwd, config.memory.path);
-
   const engine = new MemoryEngine({ dbPath });
 
   const server = http.createServer(async (req, res) => {
@@ -75,17 +64,15 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       json(res, 204, {});
       return;
     }
-
     try {
       checkAuth(req);
       const url = new URL(req.url || "/", `http://${host}:${port}`);
       const p = url.pathname.replace(/\/$/, "") || "/";
 
       if (req.method === "GET" && (p === "/health" || p === "/v1/health")) {
-        json(res, 200, { ok: true, service: "hexvault-api", version: "1.1.0" });
+        json(res, 200, { ok: true, service: "hexvault-api", version: "1.2.0" });
         return;
       }
-
       if (req.method === "GET" && p === "/v1/memories") {
         const limit = Number(url.searchParams.get("limit") || 50);
         const type = url.searchParams.get("type") as MemoryType | null;
@@ -93,7 +80,6 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         json(res, 200, { count: items.length, items });
         return;
       }
-
       const memMatch = p.match(/^\/v1\/memories\/([^/]+)$/);
       if (req.method === "GET" && memMatch) {
         const item = engine.get(memMatch[1]);
@@ -104,18 +90,11 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         json(res, 200, item);
         return;
       }
-
       if (req.method === "POST" && p === "/v1/memories") {
-        const raw = await readBody(req);
-        const body = raw ? JSON.parse(raw) : {};
-        const title = String(body.title || body.content || "").slice(0, 200);
+        const body = JSON.parse((await readBody(req)) || "{}");
         const content = String(body.content || body.title || "");
-        if (!content) {
-          throw new AppError("CONFIG_INVALID", "content is required", {
-            statusCode: 400,
-          });
-        }
-        const entry = engine.add(title || content.slice(0, 80), content, {
+        if (!content) throw new AppError("CONFIG_INVALID", "content is required", { statusCode: 400 });
+        const entry = engine.add(String(body.title || content).slice(0, 200), content, {
           type: body.type || "note",
           tags: body.tags || [],
           files: body.files || [],
@@ -124,17 +103,10 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         json(res, 201, entry);
         return;
       }
-
       if (req.method === "GET" && p === "/v1/search") {
-        const q =
-          url.searchParams.get("q") || url.searchParams.get("query") || "";
-        if (!q) {
-          throw new AppError("CONFIG_INVALID", "query parameter q is required", {
-            statusCode: 400,
-          });
-        }
-        const limit = Number(url.searchParams.get("limit") || 10);
-        const hits = engine.hybridSearch(q, limit);
+        const q = url.searchParams.get("q") || url.searchParams.get("query") || "";
+        if (!q) throw new AppError("CONFIG_INVALID", "q is required", { statusCode: 400 });
+        const hits = engine.hybridSearch(q, Number(url.searchParams.get("limit") || 10));
         json(res, 200, {
           query: q,
           count: hits.length,
@@ -144,43 +116,63 @@ export function createApiServer(opts: ApiServerOptions = {}) {
             type: h.entry.type,
             score: h.score,
             rankScore: h.rankScore,
-            importance: h.importance,
-            matchedOn: h.matchedOn,
             content: h.entry.content,
-            tags: h.entry.tags,
           })),
         });
         return;
       }
-
       if (req.method === "GET" && p === "/v1/stats") {
         json(res, 200, engine.stats());
         return;
       }
-
       if (req.method === "GET" && p === "/v1/analytics") {
         json(res, 200, engine.analytics());
         return;
       }
-
       if (req.method === "POST" && p === "/v1/review") {
-        const raw = await readBody(req);
-        const body = raw ? JSON.parse(raw) : {};
+        const body = JSON.parse((await readBody(req)) || "{}");
         const title = String(body.title || "API review");
-        const diff = String(body.body || body.diff || "");
-        const memories = engine.hybridSearch(`${title} ${diff}`.slice(0, 500), 5);
+        const memories = engine.hybridSearch(`${title} ${body.body || ""}`.slice(0, 500), 5);
         json(res, 200, {
           title,
-          summary: memories.length
-            ? `Found ${memories.length} related project memories.`
-            : "No related memories — rule-based context only.",
           relatedMemories: memories.map((m) => ({
             id: m.entry.id,
             title: m.entry.title,
-            type: m.entry.type,
             rankScore: m.rankScore,
           })),
         });
+        return;
+      }
+      if (req.method === "POST" && p === "/v1/chat") {
+        const body = JSON.parse((await readBody(req)) || "{}");
+        const question = String(body.question || body.q || "").trim();
+        if (!question) throw new AppError("CONFIG_INVALID", "question is required", { statusCode: 400 });
+        const result = await repoChat({
+          engine,
+          question,
+          extraContext: body.context ? String(body.context) : undefined,
+        });
+        json(res, 200, result);
+        return;
+      }
+      if (req.method === "POST" && p === "/v1/commit-message") {
+        const body = JSON.parse((await readBody(req)) || "{}");
+        const input = String(body.input || body.diff || body.summary || "");
+        if (!input.trim()) throw new AppError("CONFIG_INVALID", "input is required", { statusCode: 400 });
+        json(res, 200, await generateCommitMessage({ input }));
+        return;
+      }
+      if (req.method === "POST" && p === "/v1/release-notes") {
+        const body = JSON.parse((await readBody(req)) || "{}");
+        json(
+          res,
+          200,
+          await generateReleaseNotes({
+            version: String(body.version || "v0.0.0"),
+            items: Array.isArray(body.items) ? body.items.map(String) : [],
+            projectName: body.projectName ? String(body.projectName) : "HEXVault",
+          })
+        );
         return;
       }
 
@@ -188,11 +180,12 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         error: "Not found",
         endpoints: [
           "GET /health",
-          "GET /v1/memories",
-          "POST /v1/memories",
-          "GET /v1/memories/:id",
+          "GET|POST /v1/memories",
           "GET /v1/search?q=",
           "POST /v1/review",
+          "POST /v1/chat",
+          "POST /v1/commit-message",
+          "POST /v1/release-notes",
           "GET /v1/stats",
           "GET /v1/analytics",
         ],
@@ -202,9 +195,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         json(res, err.statusCode, err.toJSON());
         return;
       }
-      logger.error("API error", {
-        error: err instanceof Error ? err.message : String(err),
-      });
+      logger.error("API error", { error: err instanceof Error ? err.message : String(err) });
       json(res, 500, { error: "Internal server error" });
     }
   });
@@ -224,23 +215,20 @@ export function createApiServer(opts: ApiServerOptions = {}) {
     },
     stop(): Promise<void> {
       return new Promise((resolve, reject) => {
-        server.close((err) => {
+        server.close((e) => {
           engine.close();
-          if (err) reject(err);
-          else resolve();
+          e ? reject(e) : resolve();
         });
       });
     },
   };
 }
 
-if (
-  process.argv[1]?.endsWith("server.ts") ||
-  process.argv[1]?.endsWith("server.js")
-) {
-  const api = createApiServer();
-  api.start().catch((e) => {
-    console.error(e);
-    process.exit(1);
-  });
+if (process.argv[1]?.endsWith("server.ts") || process.argv[1]?.endsWith("server.js")) {
+  createApiServer()
+    .start()
+    .catch((e) => {
+      console.error(e);
+      process.exit(1);
+    });
 }
