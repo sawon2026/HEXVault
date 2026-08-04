@@ -1,15 +1,15 @@
 # Changelog
 
-## [1.2.0] — 2026-08-04
+## [1.2.1] — 2026-08-04
 
 ### Added
-- **Repo chat** — `hexvault ask` and `POST /v1/chat` (RAG over memories)
-- **Commit message generator** — `hexvault commit-msg` and `POST /v1/commit-message`
-- **Release notes generator** — `hexvault release-notes` and `POST /v1/release-notes`
-- Rule-based fallbacks when no LLM API key is set
+- **Analyze** — complexity + dead-code heuristics (`hexvault analyze`, `GET /v1/analyze`)
+
+## [1.2.0] — 2026-08-04
+- Repo chat, commit-msg, release-notes generators
 
 ## [1.1.0] — 2026-08-03
-- REST API, embedding providers, API docs & tests
+- REST API, embedding providers
 
 ## [1.0.0] — 2026-08-03
-- MemoryEngine, LLMRegistry, Logger, AppError, GitHub excellence pack
+- MemoryEngine, LLMRegistry, production baseline
