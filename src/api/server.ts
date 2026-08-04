@@ -1,5 +1,5 @@
 /**
- * HEXVault REST API v1.2.1
+ * HEXVault REST API v1.3.1
  */
 import http from "http";
 import { URL } from "url";
@@ -12,6 +12,7 @@ import { AppError, isAppError } from "../core/errors/app-error.js";
 import { generateCommitMessage, generateReleaseNotes } from "../core/ai/generators.js";
 import { repoChat } from "../core/ai/repo-chat.js";
 import { analyzeProject } from "../core/analysis/heuristics.js";
+import { buildKnowledgeGraph, layoutGraph } from "../core/graph/builder.js";
 
 const logger = log.child("api");
 
@@ -71,7 +72,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       const p = url.pathname.replace(/\/$/, "") || "/";
 
       if (req.method === "GET" && (p === "/health" || p === "/v1/health")) {
-        json(res, 200, { ok: true, service: "hexvault-api", version: "1.2.1" });
+        json(res, 200, { ok: true, service: "hexvault-api", version: "1.3.1" });
         return;
       }
       if (req.method === "GET" && p === "/v1/memories") {
@@ -128,6 +129,16 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       }
       if (req.method === "GET" && p === "/v1/analytics") {
         json(res, 200, engine.analytics());
+        return;
+      }
+      if (req.method === "GET" && p === "/v1/graph") {
+        const limit = Number(url.searchParams.get("limit") || 60);
+        const memories = engine.list(limit);
+        const graph = buildKnowledgeGraph(memories, { maxMemories: limit });
+        const w = Number(url.searchParams.get("w") || 900);
+        const h = Number(url.searchParams.get("h") || 600);
+        const laid = layoutGraph(graph, w, h);
+        json(res, 200, { ...laid, stats: graph.stats });
         return;
       }
       if (req.method === "GET" && p === "/v1/analyze") {
@@ -187,6 +198,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
           "GET /health",
           "GET|POST /v1/memories",
           "GET /v1/search?q=",
+          "GET /v1/graph",
           "GET /v1/analyze",
           "POST /v1/review",
           "POST /v1/chat",
