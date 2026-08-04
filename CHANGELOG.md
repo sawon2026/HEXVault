@@ -1,17 +1,15 @@
 # Changelog
 
-## [1.1.0] — 2026-08-03
+## [1.2.0] — 2026-08-04
 
 ### Added
-- **REST API** (`npm run api`) — `/health`, `/v1/memories`, `/v1/search`, `/v1/review`, `/v1/stats`, `/v1/analytics`
-- **Embedding providers** — `local` + `openai` with automatic fallback
-- API docs: `docs/api/REST.md`
-- API unit tests
+- **Repo chat** — `hexvault ask` and `POST /v1/chat` (RAG over memories)
+- **Commit message generator** — `hexvault commit-msg` and `POST /v1/commit-message`
+- **Release notes generator** — `hexvault release-notes` and `POST /v1/release-notes`
+- Rule-based fallbacks when no LLM API key is set
+
+## [1.1.0] — 2026-08-03
+- REST API, embedding providers, API docs & tests
 
 ## [1.0.0] — 2026-08-03
-
-### Added
-- MemoryEngine, LLMRegistry, Logger, AppError, unit tests, GitHub excellence pack
-
-## [0.4.0] — 2026-08-01
-- Dashboard, notifications, providers, guides, CI/CD, demo video
+- MemoryEngine, LLMRegistry, Logger, AppError, GitHub excellence pack
