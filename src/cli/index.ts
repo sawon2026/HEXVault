@@ -15,7 +15,7 @@ const program = new Command();
 program
   .name("hexvault")
   .description("HEXVault — Intelligent Project Memory + Smart PR Reviewer")
-  .version("1.2.1");
+  .version("1.4.0");
 
 program
   .command("init")
@@ -196,15 +196,14 @@ program
         );
       }
     }
-    const serious = report.deadCode.filter((d) =>
-      ["debugger", "empty-catch", "unused-export"].includes(d.kind)
-    );
-    if (serious.length) {
-      console.log(chalk.bold("\nNotable hints:\n"));
-      for (const d of serious.slice(0, 15)) {
-        console.log(`  ${d.file}:${d.line}  [${d.kind}] ${d.symbol}`);
-      }
-    }
+  });
+
+program
+  .command("tui")
+  .description("Interactive terminal UI for HEXVault")
+  .action(async () => {
+    const { runTui } = await import("./tui.js");
+    await runTui();
   });
 
 program.parse();
