@@ -1,0 +1,31 @@
+<idea-plugin>
+  <id>com.hexvault.plugin</id>
+  <name>HEXVault</name>
+  <vendor email="sawonislammd71@gmail.com" url="https://github.com/sawon2026/HEXVault">HEXVault</vendor>
+  <description><![CDATA[
+    <h2>HEXVault — Project Memory for JetBrains IDEs</h2>
+    <p>Connect IntelliJ / WebStorm / PyCharm to your HEXVault API.</p>
+    <ul>
+      <li>Search project memories</li>
+      <li>Add memory from editor selection</li>
+      <li>Ask HEXVault (repo chat)</li>
+      <li>Configurable API URL + token</li>
+    </ul>
+    <p>Requires <code>npm run api</code> (default http://127.0.0.1:3850).</p>
+  ]]></description>
+  <depends>com.intellij.modules.platform</depends>
+  <extensions defaultExtensionNs="com.intellij">
+    <applicationService serviceImplementation="com.hexvault.plugin.services.HexVaultClientService"/>
+    <applicationConfigurable parentId="tools" instance="com.hexvault.plugin.settings.HexVaultConfigurable" id="com.hexvault.plugin.settings" displayName="HEXVault"/>
+    <toolWindow id="HEXVault" anchor="right" factoryClass="com.hexvault.plugin.toolwindow.HexVaultToolWindowFactory" icon="/icons/hexvault.svg"/>
+  </extensions>
+  <actions>
+    <group id="HexVault.Menu" text="HEXVault" popup="true">
+      <add-to-group group-id="ToolsMenu" anchor="last"/>
+      <action id="HexVault.Search" class="com.hexvault.plugin.actions.SearchMemoriesAction" text="Search Memories"/>
+      <action id="HexVault.AddFromSelection" class="com.hexvault.plugin.actions.AddMemoryFromSelectionAction" text="Add Selection as Memory"/>
+      <action id="HexVault.Ask" class="com.hexvault.plugin.actions.AskHexVaultAction" text="Ask HEXVault"/>
+      <action id="HexVault.OpenToolWindow" class="com.hexvault.plugin.actions.OpenToolWindowAction" text="Open HEXVault Panel"/>
+    </group>
+  </actions>
+</idea-plugin>

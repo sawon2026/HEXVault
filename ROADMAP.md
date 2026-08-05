@@ -1,11 +1,13 @@
 # HEXVault Roadmap
 
 ## Shipped
-- [x] v1.x core platform
-- [x] v2.0–2.2 TS / Python / Go SDKs + GraphQL
-- [x] v2.3 Sync export/import (team sync foundation) + CI coverage step
+- [x] Core platform v1–v3
+- [x] TS / Python / Go SDKs + GraphQL
+- [x] Sync export/import
+- [x] JetBrains IDE plugin scaffold (v0.1)
 
 ## Next
-- [ ] Live remote pull/push sync protocol
-- [ ] Coverage continuous hard gate ≥70%
-- [ ] Dashboard UI/UX polish
+- [ ] Live remote pull/push sync
+- [ ] Coverage hard gate ≥70%
+- [ ] Marketplace publish (signed plugin)
+- [ ] VS Code extension parity

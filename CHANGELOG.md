@@ -1,18 +1,14 @@
 # Changelog
 
-## [2.3.0] — 2026-08-05
+## [3.1.0] — 2026-08-05
 
 ### Added
-- **Team sync foundation** — export/import memory bundles (`hexvault-sync-v1`)
-- API: `GET /v1/sync/export`, `POST /v1/sync/import`
-- CLI: `sync-export`, `sync-import`
-- CI coverage step
+- **JetBrains plugin** (`packages/jetbrains-plugin`)
+- Tool window + Search / Add selection / Ask actions
+- Settings for API URL + token
 
-## [2.2.0]
-- Go SDK
+## [3.0.0]
+- Platform v3 (see docs/PHASES.md)
 
-## [2.1.0]
-- GraphQL, Python SDK, multi-repo search
-
-## [2.0.0]
-- TypeScript SDK
+## [2.x]
+- SDKs, GraphQL, sync export/import
