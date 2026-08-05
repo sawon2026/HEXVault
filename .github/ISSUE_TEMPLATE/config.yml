@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Documentation
+    url: https://github.com/sawon2026/HEXVault/tree/main/docs
+    about: Setup, API, architecture, and guides
+  - name: Security vulnerability
+    url: https://github.com/sawon2026/HEXVault/blob/main/SECURITY.md
+    about: Report security issues privately per SECURITY.md
