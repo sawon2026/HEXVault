@@ -1,14 +1,18 @@
-# HEXVault brand assets (tuned)
+# HEXVault brand assets
 
-| File | Size | Use |
-|------|------|-----|
-| `hexvault-logo.svg` | 512×512 | App icon / avatar |
-| `hexvault-icon-32.svg` | 32×32 | Extension / toolbar |
-| `hexvault-icon-16.svg` | 16×16 | Favicon |
-| `hexvault-banner.svg` | 1600×480 | README hero |
-| `hexvault-social.svg` | 1280×640 | GitHub social preview |
-| `hexvault-feature-strip.svg` | 1200×200 | README feature cards |
+Optimized with [SVGO](https://github.com/svg/svgo) (`multipass`).
 
-**Tokens:** bg `#020617` · cyan `#22d3ee` · indigo `#6366f1` · violet `#a855f7` · text `#f8fafc`
+| File | Use |
+|------|-----|
+| `hexvault-logo.svg` | App icon / avatar |
+| `hexvault-icon-32.svg` | Extension / toolbar |
+| `hexvault-icon-16.svg` | Favicon |
+| `hexvault-banner.svg` | README hero |
+| `hexvault-social.svg` | GitHub social preview |
+| `hexvault-feature-strip.svg` | README feature cards |
 
-Regular flat-top hexagon geometry; shared accent gradient across surfaces.
+```bash
+npx svgo --multipass -f assets --config svgo.config.mjs
+```
+
+Config keeps `viewBox` and accessibility attributes.
