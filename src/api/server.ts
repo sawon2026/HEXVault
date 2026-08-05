@@ -1,5 +1,5 @@
 /**
- * HEXVault REST + GraphQL API v2.1.0
+ * HEXVault REST + GraphQL API v2.3.0
  */
 import http from "http";
 import { URL } from "url";
@@ -15,6 +15,7 @@ import { analyzeProject } from "../core/analysis/heuristics.js";
 import { buildKnowledgeGraph, layoutGraph } from "../core/graph/builder.js";
 import { executeGraphql, GRAPHQL_SCHEMA_SDL } from "./graphql.js";
 import { MultiRepoLinker } from "../core/multi-repo/linker.js";
+import { exportBundle, importBundle, parseBundle } from "../core/sync/exchange.js";
 
 const logger = log.child("api");
 
@@ -74,7 +75,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       const p = url.pathname.replace(/\/$/, "") || "/";
 
       if (req.method === "GET" && (p === "/health" || p === "/v1/health")) {
-        json(res, 200, { ok: true, service: "hexvault-api", version: "2.1.0" });
+        json(res, 200, { ok: true, service: "hexvault-api", version: "2.3.0" });
         return;
       }
       if (req.method === "GET" && p === "/v1/memories") {
@@ -171,6 +172,15 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         });
         return;
       }
+      if (req.method === "GET" && p === "/v1/sync/export") {
+        json(res, 200, exportBundle(engine, { limit: Number(url.searchParams.get("limit") || 10000), source: "api" }));
+        return;
+      }
+      if (req.method === "POST" && p === "/v1/sync/import") {
+        const body = JSON.parse((await readBody(req)) || "{}");
+        json(res, 200, importBundle(engine, parseBundle(body)));
+        return;
+      }
       if (req.method === "GET" && p === "/v1/analyze") {
         const report = await analyzeProject({ cwd, topN: Number(url.searchParams.get("top") || 15) });
         json(res, 200, {
@@ -228,6 +238,8 @@ export function createApiServer(opts: ApiServerOptions = {}) {
           "GET /v1/graph",
           "POST /graphql",
           "GET /v1/multi-repo/search",
+          "GET /v1/sync/export",
+          "POST /v1/sync/import",
           "GET /v1/analyze",
           "POST /v1/review",
           "POST /v1/chat",
