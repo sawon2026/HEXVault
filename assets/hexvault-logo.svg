@@ -1,34 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="HEXVault Logo">
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="HEXVault">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0F172A"/>
-      <stop offset="100%" stop-color="#1E293B"/>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0ea5e9"/>
+      <stop offset="55%" stop-color="#6366f1"/>
+      <stop offset="100%" stop-color="#a855f7"/>
     </linearGradient>
-    <linearGradient id="hex" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#22D3EE"/>
-      <stop offset="100%" stop-color="#6366F1"/>
+    <linearGradient id="g2" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee"/>
+      <stop offset="100%" stop-color="#818cf8"/>
     </linearGradient>
-    <filter id="glow">
-      <feGaussianBlur stdDeviation="4" result="blur"/>
-      <feMerge>
-        <feMergeNode in="blur"/>
-        <feMergeNode in="SourceGraphic"/>
-      </feMerge>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%">
+      <feGaussianBlur stdDeviation="12" result="b"/>
+      <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
+    <linearGradient id="shine" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.35"/>
+      <stop offset="45%" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
   </defs>
-
-  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
-
-  <g transform="translate(128, 128)" filter="url(#glow)">
-    <polygon points="0,-78 67.5,-39 67.5,39 0,78 -67.5,39 -67.5,-39"
-             fill="none" stroke="url(#hex)" stroke-width="6"/>
-    <polygon points="0,-52 45,-26 45,26 0,52 -45,26 -45,-26"
-             fill="url(#hex)" opacity="0.2"/>
-    <circle cx="0" cy="-14" r="7" fill="#22D3EE"/>
-    <circle cx="-22" cy="12" r="6" fill="#38BDF8"/>
-    <circle cx="22" cy="12" r="6" fill="#818CF8"/>
-    <line x1="0" y1="-14" x2="-22" y2="12" stroke="#67E8F9" stroke-width="2.5"/>
-    <line x1="0" y1="-14" x2="22" y2="12" stroke="#A5B4FC" stroke-width="2.5"/>
-    <line x1="-22" y1="12" x2="22" y2="12" stroke="#67E8F9" stroke-width="2" opacity="0.7"/>
+  <rect width="512" height="512" rx="112" fill="#0B1220"/>
+  <rect width="512" height="512" rx="112" fill="url(#g)" opacity="0.15"/>
+  <circle cx="256" cy="256" r="188" fill="none" stroke="url(#g)" stroke-width="3" opacity="0.35"/>
+  <circle cx="256" cy="256" r="168" fill="none" stroke="url(#g2)" stroke-width="1.5" opacity="0.25" stroke-dasharray="6 10"/>
+  <g filter="url(#glow)" transform="translate(256 256)">
+    <polygon points="0,-120 104,-60 104,60 0,120 -104,60 -104,-60" fill="url(#g)" opacity="0.95"/>
+    <polygon points="0,-96 83,-48 83,48 0,96 -83,48 -83,-48" fill="#0B1220" opacity="0.55"/>
+    <path d="M-42 -48 H-18 V-8 H18 V-48 H42 V48 H18 V12 H-18 V48 H-42 Z" fill="#f8fafc"/>
+    <rect x="-6" y="28" width="12" height="22" rx="3" fill="#22d3ee" opacity="0.9"/>
   </g>
+  <rect width="512" height="512" rx="112" fill="url(#shine)"/>
 </svg>
