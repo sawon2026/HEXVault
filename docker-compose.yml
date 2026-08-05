@@ -1,0 +1,38 @@
+services:
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: hexvault-api
+    environment:
+      - HEXVAULT_API_HOST=0.0.0.0
+      - HEXVAULT_API_PORT=3850
+      - HEXVAULT_DATA_DIR=/data
+    ports:
+      - "3850:3850"
+    volumes:
+      - hexvault-data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "-q", "-O", "-", "http://127.0.0.1:3850/health"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+
+  web:
+    build:
+      context: apps/web
+      dockerfile: Dockerfile
+    container_name: hexvault-web
+    environment:
+      - HEXVAULT_API_URL=http://api:3850
+    ports:
+      - "3000:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  hexvault-data:

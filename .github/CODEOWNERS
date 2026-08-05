@@ -1,0 +1,10 @@
+# Default owner
+* @sawon2026
+
+# Core engine
+/src/core/ @sawon2026
+/src/cli/ @sawon2026
+/src/action/ @sawon2026
+
+# CI
+/.github/ @sawon2026

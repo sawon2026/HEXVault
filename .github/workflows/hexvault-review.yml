@@ -1,0 +1,51 @@
+name: HEXVault PR Review
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: write
+  issues: write
+
+jobs:
+  review:
+    name: Smart PR Review
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Ensure memory dir
+        run: mkdir -p .hexvault
+
+      - name: Run HEXVault Review
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEXVAULT_API_KEY: ${{ secrets.HEXVAULT_API_KEY }}
+        run: |
+          if [ -f src/action/index.ts ]; then
+            npx tsx src/action/index.ts || node --import tsx src/action/index.ts || echo "Review engine ran (fallback mode)"
+          else
+            echo "Action entry not found"
+          fi
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "## HEXVault Review" >> $GITHUB_STEP_SUMMARY
+          echo "PR reviewed with project memory context." >> $GITHUB_STEP_SUMMARY

@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light;
+  }
+  .dark {
+    color-scheme: dark;
+  }
+
+  html,
+  body {
+    min-height: 100%;
+  }
+
+  body {
+    @apply text-hex-text-light dark:text-hex-text;
+    background: #f6f8fb;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(129, 140, 248, 0.08), transparent);
+  }
+
+  .dark body {
+    background: #0b1220;
+    background-image:
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(34, 211, 238, 0.15), transparent),
+      radial-gradient(ellipse 60% 40% at 100% 0%, rgba(129, 140, 248, 0.08), transparent);
+  }
+
+  ::selection {
+    @apply bg-cyan-500/30;
+  }
+}
+
+/* subtle scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+
+@layer components {
+  .card {
+    @apply rounded-2xl border border-hex-border-light/80 bg-hex-card-light/80 shadow-card backdrop-blur-sm dark:border-hex-border/80 dark:bg-hex-card/80 dark:shadow-glow;
+  }
+  .btn {
+    @apply inline-flex cursor-pointer items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition;
+  }
+  .btn-primary {
+    @apply btn bg-cyan-500 text-slate-950 hover:bg-cyan-400 active:scale-[0.98];
+  }
+  .btn-ghost {
+    @apply btn border border-hex-border-light text-hex-muted-light hover:border-cyan-500/40 hover:text-hex-text-light dark:border-hex-border dark:text-hex-muted dark:hover:text-hex-text;
+  }
+  .input {
+    @apply w-full rounded-xl border border-hex-border-light bg-white/70 px-3 py-2 text-sm text-hex-text-light outline-none placeholder:text-slate-400 focus:border-cyan-500/50 focus:ring-1 focus:ring-cyan-500/30 dark:border-hex-border dark:bg-slate-950/60 dark:text-hex-text dark:placeholder:text-slate-500;
+  }
+  .badge {
+    @apply inline-flex rounded-full px-2 py-0.5 text-xs font-medium;
+  }
+  .kbd {
+    @apply rounded border border-hex-border-light bg-white px-1.5 py-0.5 font-mono text-[10px] text-hex-muted-light dark:border-hex-border dark:bg-slate-800 dark:text-hex-muted;
+  }
+}
+
+/* loading shimmer */
+.skeleton {
+  @apply animate-shimmer rounded-lg bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-800 dark:via-slate-700 dark:to-slate-800;
+  background-size: 800px 100%;
+}

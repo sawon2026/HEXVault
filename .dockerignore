@@ -1,0 +1,17 @@
+node_modules
+dist
+.next
+coverage
+*.db
+*.db-journal
+.hexvault
+.env
+.git
+.github
+docs
+examples
+scripts
+skills
+assets
+apps/web/node_modules
+apps/web/.next

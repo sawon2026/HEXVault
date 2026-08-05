@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256" role="img" aria-label="HEXVault Logo">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/>
+      <stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="hex" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22D3EE"/>
+      <stop offset="100%" stop-color="#6366F1"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="256" height="256" rx="48" fill="url(#bg)"/>
+
+  <g transform="translate(128, 128)" filter="url(#glow)">
+    <polygon points="0,-78 67.5,-39 67.5,39 0,78 -67.5,39 -67.5,-39"
+             fill="none" stroke="url(#hex)" stroke-width="6"/>
+    <polygon points="0,-52 45,-26 45,26 0,52 -45,26 -45,-26"
+             fill="url(#hex)" opacity="0.2"/>
+    <circle cx="0" cy="-14" r="7" fill="#22D3EE"/>
+    <circle cx="-22" cy="12" r="6" fill="#38BDF8"/>
+    <circle cx="22" cy="12" r="6" fill="#818CF8"/>
+    <line x1="0" y1="-14" x2="-22" y2="12" stroke="#67E8F9" stroke-width="2.5"/>
+    <line x1="0" y1="-14" x2="22" y2="12" stroke="#A5B4FC" stroke-width="2.5"/>
+    <line x1="-22" y1="12" x2="22" y2="12" stroke="#67E8F9" stroke-width="2" opacity="0.7"/>
+  </g>
+</svg>

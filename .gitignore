@@ -1,0 +1,13 @@
+node_modules/
+dist/
+.hexvault/
+*.db
+*.db-journal
+.env
+.env.local
+.DS_Store
+coverage/
+*.log
+.idea/
+.vscode/
+*.tsbuildinfo

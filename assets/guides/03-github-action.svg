@@ -1,0 +1,59 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="560" viewBox="0 0 900 560">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0F172A"/><stop offset="100%" stop-color="#1E293B"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22D3EE"/><stop offset="100%" stop-color="#818CF8"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="560" rx="16" fill="url(#bg)"/>
+  <text x="40" y="48" font-family="system-ui,sans-serif" font-size="22" font-weight="700" fill="#F8FAFC">Step 3 — Enable GitHub Action (where to click)</text>
+  <rect x="40" y="62" width="200" height="3" rx="2" fill="url(#accent)"/>
+
+  <!-- GitHub UI mock -->
+  <rect x="40" y="90" width="820" height="430" rx="12" fill="#0D1117" stroke="#30363D"/>
+
+  <!-- Top bar -->
+  <rect x="40" y="90" width="820" height="44" fill="#161B22"/>
+  <text x="60" y="118" font-family="system-ui,sans-serif" font-size="14" fill="#F0F6FC">sawon2026 / HEXVault</text>
+
+  <!-- Tabs -->
+  <text x="60" y="160" font-family="system-ui,sans-serif" font-size="13" fill="#8B949E">Code</text>
+  <text x="120" y="160" font-family="system-ui,sans-serif" font-size="13" fill="#8B949E">Issues</text>
+  <text x="190" y="160" font-family="system-ui,sans-serif" font-size="13" fill="#58A6FF" font-weight="600">Actions</text>
+  <line x1="185" y1="168" x2="245" y2="168" stroke="#F78166" stroke-width="2"/>
+  <text x="270" y="160" font-family="system-ui,sans-serif" font-size="13" fill="#8B949E">Settings</text>
+
+  <!-- Arrow pointing to Actions -->
+  <path d="M210 175 L210 195" stroke="#22D3EE" stroke-width="2" marker-end="url(#arr)"/>
+  <defs>
+    <marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#22D3EE"/>
+    </marker>
+  </defs>
+  <rect x="250" y="180" width="280" height="28" rx="6" fill="#164E63"/>
+  <text x="265" y="199" font-family="system-ui,sans-serif" font-size="12" fill="#67E8F9">① Click the Actions tab</text>
+
+  <!-- Workflow list -->
+  <rect x="60" y="230" width="380" height="250" rx="8" fill="#161B22" stroke="#30363D"/>
+  <text x="80" y="260" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#F0F6FC">Workflows</text>
+  <rect x="80" y="280" width="340" height="36" rx="6" fill="#21262D" stroke="#388BFD"/>
+  <text x="95" y="303" font-family="system-ui,sans-serif" font-size="13" fill="#58A6FF">CI</text>
+  <rect x="80" y="325" width="340" height="36" rx="6" fill="#21262D"/>
+  <text x="95" y="348" font-family="system-ui,sans-serif" font-size="13" fill="#C9D1D9">HEXVault PR Review</text>
+  <rect x="80" y="370" width="340" height="36" rx="6" fill="#21262D"/>
+  <text x="95" y="393" font-family="system-ui,sans-serif" font-size="13" fill="#C9D1D9">Release</text>
+  <text x="80" y="440" font-family="system-ui,sans-serif" font-size="11" fill="#8B949E">Already included in .github/workflows/</text>
+  <text x="80" y="460" font-family="system-ui,sans-serif" font-size="11" fill="#3FB950">No extra click needed — auto-runs on PR</text>
+
+  <!-- Right panel steps -->
+  <rect x="460" y="230" width="380" height="250" rx="8" fill="#161B22" stroke="#30363D"/>
+  <text x="480" y="260" font-family="system-ui,sans-serif" font-size="13" font-weight="600" fill="#F0F6FC">What happens</text>
+  <text x="480" y="295" font-family="system-ui,sans-serif" font-size="13" fill="#C9D1D9">② Open a Pull Request</text>
+  <text x="480" y="325" font-family="system-ui,sans-serif" font-size="13" fill="#C9D1D9">③ Action runs automatically</text>
+  <text x="480" y="355" font-family="system-ui,sans-serif" font-size="13" fill="#C9D1D9">④ HEXVault posts review comment</text>
+  <text x="480" y="400" font-family="system-ui,sans-serif" font-size="12" fill="#8B949E">Optional secret:</text>
+  <text x="480" y="425" font-family="monospace" font-size="12" fill="#F78166">Settings → Secrets → HEXVAULT_API_KEY</text>
+  <text x="480" y="455" font-family="system-ui,sans-serif" font-size="11" fill="#8B949E">(only if you want LLM reviews)</text>
+</svg>
