@@ -2,11 +2,12 @@
   "name": "hexvault",
   "displayName": "HEXVault",
   "description": "Project memory, search, and AI chat powered by HEXVault",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "sawon2026",
   "license": "MIT",
   "engines": { "vscode": "^1.85.0" },
   "categories": ["Other", "Machine Learning", "Productivity"],
+  "main": "./out/extension.js",
   "activationEvents": [
     "onView:hexvault.panel",
     "onCommand:hexvault.search",
@@ -14,59 +15,50 @@
     "onCommand:hexvault.ask",
     "onCommand:hexvault.health"
   ],
-  "main": "./out/extension.js",
   "contributes": {
     "commands": [
-      { "command": "hexvault.search", "title": "HEXVault: Search Memories", "icon": "$(search)" },
-      { "command": "hexvault.addSelection", "title": "HEXVault: Add Selection as Memory", "icon": "$(add)" },
-      { "command": "hexvault.ask", "title": "HEXVault: Ask", "icon": "$(comment-discussion)" },
-      { "command": "hexvault.health", "title": "HEXVault: API Health", "icon": "$(heart)" },
-      { "command": "hexvault.openPanel", "title": "HEXVault: Open Panel", "icon": "$(window)" }
+      { "command": "hexvault.search", "title": "HEXVault: Search Memories" },
+      { "command": "hexvault.addSelection", "title": "HEXVault: Add Selection as Memory" },
+      { "command": "hexvault.ask", "title": "HEXVault: Ask" },
+      { "command": "hexvault.health", "title": "HEXVault: API Health" },
+      { "command": "hexvault.openPanel", "title": "HEXVault: Open Panel" }
     ],
     "menus": {
       "editor/context": [
-        { "command": "hexvault.addSelection", "when": "editorHasSelection", "group": "hexvault@1" },
-        { "command": "hexvault.ask", "group": "hexvault@2" }
+        { "command": "hexvault.addSelection", "when": "editorHasSelection", "group": "hexvault@1" }
       ]
     },
     "viewsContainers": {
-      "activitybar": [
-        { "id": "hexvault", "title": "HEXVault", "icon": "media/hexvault.svg" }
-      ]
+      "activitybar": [{ "id": "hexvault", "title": "HEXVault", "icon": "media/hexvault.svg" }]
     },
     "views": {
-      "hexvault": [
-        { "type": "webview", "id": "hexvault.panel", "name": "HEXVault" }
-      ]
+      "hexvault": [{ "type": "webview", "id": "hexvault.panel", "name": "HEXVault" }]
     },
     "configuration": {
       "title": "HEXVault",
       "properties": {
-        "hexvault.baseUrl": {
-          "type": "string",
-          "default": "http://127.0.0.1:3850",
-          "description": "HEXVault API base URL"
-        },
-        "hexvault.token": {
-          "type": "string",
-          "default": "",
-          "description": "Optional Bearer token"
-        },
-        "hexvault.timeoutMs": {
-          "type": "number",
-          "default": 30000
-        }
+        "hexvault.baseUrl": { "type": "string", "default": "http://127.0.0.1:3850" },
+        "hexvault.token": { "type": "string", "default": "" },
+        "hexvault.timeoutMs": { "type": "number", "default": 30000 }
       }
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run build",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./"
+    "build:webview": "node esbuild.webview.mjs",
+    "build": "npm run build:webview && npm run compile",
+    "watch": "tsc -watch -p ./",
+    "watch:webview": "node esbuild.webview.mjs --watch"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@types/vscode": "^1.85.0",
+    "esbuild": "^0.24.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "typescript": "^5.7.2"
   }
 }

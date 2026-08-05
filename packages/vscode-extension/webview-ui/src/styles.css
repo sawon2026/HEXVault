@@ -1,0 +1,48 @@
+:root { color-scheme: light dark; }
+* { box-sizing: border-box; }
+body {
+  margin: 0; padding: 0;
+  font-family: var(--vscode-font-family);
+  font-size: 13px;
+  color: var(--vscode-foreground);
+  background: var(--vscode-sideBar-background);
+}
+.app { padding: 12px; }
+.header h2 { margin: 0; font-size: 14px; font-weight: 600; }
+.muted { color: var(--vscode-descriptionForeground); margin: 4px 0 12px; font-size: 12px; }
+.row { display: flex; gap: 6px; margin-bottom: 8px; }
+.input {
+  flex: 1; padding: 7px 10px; border-radius: 6px;
+  border: 1px solid var(--vscode-input-border, rgba(127,127,127,0.4));
+  background: var(--vscode-input-background);
+  color: var(--vscode-input-foreground); outline: none;
+}
+.input:focus { border-color: var(--vscode-focusBorder, #0ea5e9); }
+.btn { padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer; font-size: 12px; }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+.btn.primary { background: var(--vscode-button-background); color: var(--vscode-button-foreground); }
+.btn.secondary {
+  background: transparent; color: var(--vscode-foreground);
+  border: 1px solid var(--vscode-input-border, rgba(127,127,127,0.4));
+}
+.status { margin: 8px 0; color: var(--vscode-descriptionForeground); }
+.error {
+  margin: 8px 0; padding: 8px; border-radius: 6px;
+  background: color-mix(in srgb, #ef4444 15%, transparent); color: #f87171;
+}
+.results { margin-top: 10px; display: flex; flex-direction: column; gap: 8px; }
+.card {
+  border: 1px solid var(--vscode-input-border, rgba(127,127,127,0.35));
+  border-radius: 8px; padding: 10px;
+  background: var(--vscode-editor-background, transparent);
+}
+.meta { font-size: 12px; margin-bottom: 6px; font-weight: 500; }
+.badge {
+  display: inline-block; margin-left: 6px; padding: 1px 6px; border-radius: 999px; font-size: 10px;
+  background: color-mix(in srgb, #0ea5e9 25%, transparent);
+}
+.body { margin: 0; line-height: 1.4; white-space: pre-wrap; word-break: break-word; opacity: 0.9; }
+.card pre {
+  margin: 0; white-space: pre-wrap; word-break: break-word;
+  font-family: var(--vscode-editor-font-family, monospace); font-size: 12px; line-height: 1.45;
+}
