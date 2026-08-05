@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="220" viewBox="0 0 1200 220" role="img" aria-label="HEXVault features">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#0B1220"/><stop offset="100%" stop-color="#111827"/></linearGradient>
+    <linearGradient id="c1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#0ea5e9"/></linearGradient>
+    <linearGradient id="c2" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#818cf8"/><stop offset="100%" stop-color="#6366f1"/></linearGradient>
+    <linearGradient id="c3" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c084fc"/><stop offset="100%" stop-color="#a855f7"/></linearGradient>
+    <linearGradient id="c4" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/></linearGradient>
+  </defs>
+  <rect width="1200" height="220" fill="url(#bg)"/>
+  <g font-family="ui-sans-serif, system-ui, sans-serif">
+    <rect x="40" y="36" width="260" height="148" rx="16" fill="#0f172a" stroke="#1e293b"/>
+    <circle cx="80" cy="80" r="18" fill="url(#c1)"/><text x="110" y="86" font-size="18" font-weight="700" fill="#f1f5f9">Memory Vault</text>
+    <text x="60" y="130" font-size="13" fill="#94a3b8">Decisions, fixes &amp; patterns</text>
+    <text x="60" y="150" font-size="13" fill="#94a3b8">in local SQLite + vectors</text>
+    <rect x="320" y="36" width="260" height="148" rx="16" fill="#0f172a" stroke="#1e293b"/>
+    <circle cx="360" cy="80" r="18" fill="url(#c2)"/><text x="390" y="86" font-size="18" font-weight="700" fill="#f1f5f9">Smart Review</text>
+    <text x="340" y="130" font-size="13" fill="#94a3b8">PRs reviewed with your</text>
+    <text x="340" y="150" font-size="13" fill="#94a3b8">project memory context</text>
+    <rect x="600" y="36" width="260" height="148" rx="16" fill="#0f172a" stroke="#1e293b"/>
+    <circle cx="640" cy="80" r="18" fill="url(#c3)"/><text x="670" y="86" font-size="18" font-weight="700" fill="#f1f5f9">RAG Chat</text>
+    <text x="620" y="130" font-size="13" fill="#94a3b8">Ask the repo — grounded</text>
+    <text x="620" y="150" font-size="13" fill="#94a3b8">answers with citations</text>
+    <rect x="880" y="36" width="280" height="148" rx="16" fill="#0f172a" stroke="#1e293b"/>
+    <circle cx="920" cy="80" r="18" fill="url(#c4)"/><text x="950" y="86" font-size="18" font-weight="700" fill="#f1f5f9">IDE + SDKs</text>
+    <text x="900" y="130" font-size="13" fill="#94a3b8">VS Code · JetBrains</text>
+    <text x="900" y="150" font-size="13" fill="#94a3b8">TS · Python · Go clients</text>
+  </g>
+</svg>
