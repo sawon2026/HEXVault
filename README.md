@@ -103,20 +103,11 @@ npm install && npm run build
 # F5 → Extension Development Host  (API must be running)
 ```
 
-Message flow: React → `postMessage` → extension host → HEXVault API → reply with `requestId` → Query cache.
-
 ### JetBrains (`packages/jetbrains-plugin`)
-
-| Feature | Detail |
-|---------|--------|
-| Tool window | Search / Ask / Health |
-| Actions | Tools → HEXVault (search, add selection, ask) |
-| Settings | API URL + optional token |
 
 ```bash
 cd packages/jetbrains-plugin
-./gradlew buildPlugin    # ZIP under build/distributions/
-./gradlew runIde
+./gradlew buildPlugin && ./gradlew runIde
 ```
 
 ---
@@ -140,24 +131,23 @@ Full reference: [docs/api/REST.md](docs/api/REST.md)
 ## SDKs
 
 ```ts
-// TypeScript — packages/sdk
 import { HexVaultClient } from "@hexvault/sdk";
 const c = new HexVaultClient({ baseUrl: "http://127.0.0.1:3850" });
 await c.search("sqlite");
 ```
 
-```python
-# Python — packages/sdk-python
-from hexvault import HexVaultClient
-c = HexVaultClient()
-print(c.chat("What DB do we use?"))
-```
+Python: `packages/sdk-python` · Go: `packages/sdk-go`
 
-```go
-// Go — packages/sdk-go
-c := hexvault.New("http://127.0.0.1:3850")
-c.Search("sqlite", 10)
-```
+---
+
+## Quality & audit
+
+| Doc | Link |
+|-----|------|
+| World-class audit | [docs/AUDIT_WORLDCLASS.md](docs/AUDIT_WORLDCLASS.md) |
+| Quality scores (honest) | [docs/QUALITY_REPORT.md](docs/QUALITY_REPORT.md) |
+| Architecture diagrams | [docs/architecture/diagrams.md](docs/architecture/diagrams.md) |
+| Code of Conduct | [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) |
 
 ---
 
@@ -168,72 +158,31 @@ c.Search("sqlite", 10)
 | Setup | [docs/guides/SETUP.md](docs/guides/SETUP.md) |
 | Architecture | [docs/architecture/overview.md](docs/architecture/overview.md) |
 | REST + GraphQL | [docs/api/REST.md](docs/api/REST.md) |
-| CLI | [docs/CLI.md](docs/CLI.md) |
 | Environment | [docs/guides/ENVIRONMENT.md](docs/guides/ENVIRONMENT.md) |
-| FAQ / Troubleshooting / Migration | [docs/guides/](docs/guides/) |
 | 14-phase status | [docs/PHASES.md](docs/PHASES.md) |
-| VS Code extension | [packages/vscode-extension/README.md](packages/vscode-extension/README.md) |
-| JetBrains plugin | [packages/jetbrains-plugin/README.md](packages/jetbrains-plugin/README.md) |
+| VS Code | [packages/vscode-extension/README.md](packages/vscode-extension/README.md) |
+| JetBrains | [packages/jetbrains-plugin/README.md](packages/jetbrains-plugin/README.md) |
 
 ---
 
 ## Configuration
 
-`.hexvault.yml` (from `hexvault init`):
-
-```yaml
-memory:
-  path: .hexvault/memory.db
-  vector: true
-  defaultTtlDays: 0
-  dedupThreshold: 0.92
-
-review:
-  model: rule-based          # or openai | anthropic | grok | ollama | ...
-  severity: medium
-
-llm:
-  priority: [openai, anthropic, ollama]
-  maxRetries: 2
-
-notifications:
-  enabled: false
-  channel: discord           # slack | discord | teams | notion | jira | linear
-
-webhooks:
-  enabled: false
-  events: [memory.added, review.completed, sync.imported]
-
-multiRepo:
-  enabled: false
-  configPath: .hexvault/multi-repo.json
-```
-
-Env vars: [docs/guides/ENVIRONMENT.md](docs/guides/ENVIRONMENT.md)  
-(`OPENAI_API_KEY`, `HEXVAULT_API_TOKEN`, `HEXVAULT_API_PORT`, webhook secrets, …)
+`.hexvault.yml` via `hexvault init`. Env: [docs/guides/ENVIRONMENT.md](docs/guides/ENVIRONMENT.md)  
+Production tip: set **`HEXVAULT_API_TOKEN`** when the API is reachable beyond localhost.
 
 ---
 
 ## Architecture
 
 ```
-src/
-├── core/           # memory · llm · vector · review · ai · sync · webhooks · …
-├── api/            # REST + GraphQL (:3850)
-├── cli/            # CLI + TUI
-├── action/         # GitHub Action
-├── dashboard/      # legacy UI
-└── providers/      # GitHub · GitLab · Bitbucket
-apps/web/           # Next.js dashboard
-packages/
-├── sdk/            # TypeScript client
-├── sdk-python/
-├── sdk-go/
-├── vscode-extension/    # React + TanStack Query webview
-└── jetbrains-plugin/    # IntelliJ Platform plugin
+src/core · src/api · src/cli · src/action · src/providers
+apps/web                    # Next.js dashboard (canonical UI)
+packages/sdk{,-python,-go}
+packages/vscode-extension   # React + TanStack Query
+packages/jetbrains-plugin
 ```
 
-Details: [docs/architecture/overview.md](docs/architecture/overview.md)
+Diagrams: [docs/architecture/diagrams.md](docs/architecture/diagrams.md)
 
 ---
 
@@ -241,34 +190,16 @@ Details: [docs/architecture/overview.md](docs/architecture/overview.md)
 
 ```bash
 npm run lint && npm run format:check
-npx tsc --noEmit
-npm test
-npm run build
-npm run web:build
+npx tsc --noEmit && npm test && npm run build
 ```
 
-CI: `.github/workflows/ci.yml` (Node 18/20/22).
-
----
-
-## Version History
-
-| Version | Focus |
-|---------|--------|
-| **v0.1–v0.4** | Memory, reviewer, Action, multi-repo, dashboard foundations |
-| **v1–v2** | REST, GraphQL, SDKs (TS/Python/Go), TUI, knowledge graph, sync |
-| **v3.0** | Schema v2, multi-model streaming, webhooks, Docker, hardened CI |
-| **IDE** | JetBrains plugin · VS Code extension (React webview · TanStack Query cache) |
+CI: `.github/workflows/ci.yml`
 
 ---
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). PRs welcome — HEXVault can review them.
-
-## Security
-
-[SECURITY.md](SECURITY.md)
+[CONTRIBUTING.md](CONTRIBUTING.md) · [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · [SECURITY.md](SECURITY.md)
 
 ## License
 
