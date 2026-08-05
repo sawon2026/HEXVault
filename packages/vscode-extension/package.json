@@ -1,0 +1,72 @@
+{
+  "name": "hexvault",
+  "displayName": "HEXVault",
+  "description": "Project memory, search, and AI chat powered by HEXVault",
+  "version": "0.1.0",
+  "publisher": "sawon2026",
+  "license": "MIT",
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Other", "Machine Learning", "Productivity"],
+  "activationEvents": [
+    "onView:hexvault.panel",
+    "onCommand:hexvault.search",
+    "onCommand:hexvault.addSelection",
+    "onCommand:hexvault.ask",
+    "onCommand:hexvault.health"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "hexvault.search", "title": "HEXVault: Search Memories", "icon": "$(search)" },
+      { "command": "hexvault.addSelection", "title": "HEXVault: Add Selection as Memory", "icon": "$(add)" },
+      { "command": "hexvault.ask", "title": "HEXVault: Ask", "icon": "$(comment-discussion)" },
+      { "command": "hexvault.health", "title": "HEXVault: API Health", "icon": "$(heart)" },
+      { "command": "hexvault.openPanel", "title": "HEXVault: Open Panel", "icon": "$(window)" }
+    ],
+    "menus": {
+      "editor/context": [
+        { "command": "hexvault.addSelection", "when": "editorHasSelection", "group": "hexvault@1" },
+        { "command": "hexvault.ask", "group": "hexvault@2" }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        { "id": "hexvault", "title": "HEXVault", "icon": "media/hexvault.svg" }
+      ]
+    },
+    "views": {
+      "hexvault": [
+        { "type": "webview", "id": "hexvault.panel", "name": "HEXVault" }
+      ]
+    },
+    "configuration": {
+      "title": "HEXVault",
+      "properties": {
+        "hexvault.baseUrl": {
+          "type": "string",
+          "default": "http://127.0.0.1:3850",
+          "description": "HEXVault API base URL"
+        },
+        "hexvault.token": {
+          "type": "string",
+          "default": "",
+          "description": "Optional Bearer token"
+        },
+        "hexvault.timeoutMs": {
+          "type": "number",
+          "default": 30000
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "typescript": "^5.7.2"
+  }
+}
