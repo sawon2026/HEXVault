@@ -1,18 +1,15 @@
 # Changelog
 
-## [2.0.0] — 2026-08-04
+## [2.1.0] — 2026-08-05
 
 ### Added
-- **`@hexvault/sdk`** — official TypeScript API client (`packages/sdk`)
-- Typed methods: memories, search, chat, analyze, graph, generators
-- `HexVaultApiError`, Bearer auth, custom fetch / timeout
-- SDK unit tests + `examples/sdk-usage.ts`
+- GraphQL gateway (`POST /graphql`)
+- Python SDK (`packages/sdk-python`)
+- Multi-repo search API (`GET /v1/multi-repo/search`)
+- Phase status doc (`docs/PHASES.md`)
 
-## [1.4.x]
-- Interactive TUI, expanded tests
+## [2.0.0]
+- TypeScript SDK `@hexvault/sdk`
 
-## [1.3.x]
-- Next.js dashboard, knowledge graph
-
-## [1.2.x] / earlier
-- Analyze, chat, REST API, MemoryEngine
+## [1.x]
+- TUI, dashboard, graph, analyze, REST, memory engine

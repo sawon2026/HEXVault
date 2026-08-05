@@ -1,11 +1,12 @@
 # HEXVault Roadmap
 
 ## Shipped
-- [x] v1.0–1.4 Memory, API, dashboard, graph, TUI, tests
-- [x] v2.0.0 Official TypeScript SDK (`@hexvault/sdk`)
+- [x] v1.x core platform
+- [x] v2.0 TypeScript SDK
+- [x] v2.1 GraphQL + Python SDK + multi-repo search
 
-## Next (v2.x)
-- [ ] GraphQL gateway
-- [ ] Team / multi-repo sync
-- [ ] Language SDKs (Python, Go)
-- [ ] Coverage continuous >70% in CI
+## Next
+- [ ] Team cloud sync
+- [ ] Go SDK
+- [ ] Coverage continuous >70%
+- [ ] Dashboard UI/UX polish (phase 14 continuous)

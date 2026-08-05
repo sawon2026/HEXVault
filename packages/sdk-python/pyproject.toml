@@ -1,0 +1,11 @@
+[project]
+name = "hexvault"
+version = "2.1.0"
+description = "Python client for HEXVault REST API"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+readme = "README.md"
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
