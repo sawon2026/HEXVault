@@ -1,7 +1,7 @@
 {
   "name": "hexvault",
-  "version": "2.1.0",
-  "description": "HEXVault — GraphQL gateway, Python SDK, multi-repo search, TS SDK, TUI, dashboard",
+  "version": "2.2.0",
+  "description": "HEXVault — Go/Python/TS SDKs, GraphQL, multi-repo, TUI, dashboard",
   "type": "module",
   "bin": { "hexvault": "./dist/cli/index.js" },
   "scripts": {

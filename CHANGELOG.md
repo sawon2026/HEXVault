@@ -1,15 +1,17 @@
 # Changelog
 
-## [2.1.0] — 2026-08-05
+## [2.2.0] — 2026-08-05
 
 ### Added
-- GraphQL gateway (`POST /graphql`)
-- Python SDK (`packages/sdk-python`)
-- Multi-repo search API (`GET /v1/multi-repo/search`)
-- Phase status doc (`docs/PHASES.md`)
+- **Go SDK** — `packages/sdk-go`
+- Health, AddMemory, Search, Chat, Stats, Analyze, Graph, GraphQL
+- Unit tests (passed locally)
+
+## [2.1.0]
+- GraphQL, Python SDK, multi-repo search
 
 ## [2.0.0]
-- TypeScript SDK `@hexvault/sdk`
+- TypeScript SDK
 
 ## [1.x]
-- TUI, dashboard, graph, analyze, REST, memory engine
+- Core platform
