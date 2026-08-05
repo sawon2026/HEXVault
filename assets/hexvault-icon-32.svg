@@ -1,8 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32" role="img" aria-label="HEXVault">
-  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="55%" stop-color="#6366f1"/><stop offset="100%" stop-color="#c084fc"/></linearGradient></defs>
-  <rect width="32" height="32" rx="8" fill="#020617"/>
-  <polygon points="16,3.5 26.5,9.5 26.5,22.5 16,28.5 5.5,22.5 5.5,9.5" fill="url(#g)"/>
-  <polygon points="16,7 23,11 23,21 16,25 9,21 9,11" fill="#020617" opacity=".55"/>
-  <path d="M10.5 10.5h2.6v3.2h3.8v-3.2H19.5v11h-2.6v-4.2h-3.8v4.2h-2.6z" fill="#f8fafc"/>
-  <rect x="14.5" y="20" width="3" height="4.5" rx="1" fill="#22d3ee"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" aria-label="HEXVault" viewBox="0 0 32 32"><defs><linearGradient id="a" x1="0%" x2="100%" y1="0%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="55%" stop-color="#6366f1"/><stop offset="100%" stop-color="#c084fc"/></linearGradient></defs><rect width="32" height="32" fill="#020617" rx="8"/><path fill="url(#a)" d="m16 3.5 10.5 6v13l-10.5 6-10.5-6v-13z"/><path fill="#020617" d="m16 7 7 4v10l-7 4-7-4V11z" opacity=".55"/><path fill="#f8fafc" d="M10.5 10.5h2.6v3.2h3.8v-3.2h2.6v11h-2.6v-4.2h-3.8v4.2h-2.6z"/><rect width="3" height="4.5" x="14.5" y="20" fill="#22d3ee" rx="1"/></svg>
