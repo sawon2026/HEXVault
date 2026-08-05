@@ -1,1 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><rect width="16" height="16" rx="4" fill="#0B1220"/><polygon points="8,2 13,5 13,11 8,14 3,11 3,5" fill="#0ea5e9"/><polygon points="8,4 11.2,5.9 11.2,10.1 8,12 4.8,10.1 4.8,5.9" fill="#0B1220" opacity=".5"/><text x="8" y="11" text-anchor="middle" font-size="6" font-weight="700" fill="#fff" font-family="sans-serif">H</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" role="img" aria-label="HEXVault">
+  <defs><linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#22d3ee"/><stop offset="100%" stop-color="#a855f7"/></linearGradient></defs>
+  <rect width="16" height="16" rx="3.5" fill="#020617"/>
+  <polygon points="8,1.8 13.2,4.8 13.2,11.2 8,14.2 2.8,11.2 2.8,4.8" fill="url(#g)"/>
+  <polygon points="8,3.6 11.4,5.6 11.4,10.4 8,12.4 4.6,10.4 4.6,5.6" fill="#020617" opacity=".55"/>
+  <path d="M5.2 5.2h1.4v2h1.8v-2H9.8v5.6H8.4v-2.2H6.6v2.2H5.2z" fill="#f8fafc"/>
+</svg>

@@ -1,62 +1,64 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="480" viewBox="0 0 1600 480" role="img" aria-label="HEXVault">
   <defs>
     <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#020617"/><stop offset="45%" stop-color="#0B1220"/><stop offset="100%" stop-color="#1e1b4b"/>
+      <stop offset="0%" stop-color="#020617"/><stop offset="55%" stop-color="#0B1220"/><stop offset="100%" stop-color="#1e1b4b"/>
     </linearGradient>
     <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#818cf8"/><stop offset="100%" stop-color="#c084fc"/>
+    </linearGradient>
+    <linearGradient id="hexFill" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#22d3ee"/><stop offset="50%" stop-color="#6366f1"/><stop offset="100%" stop-color="#c084fc"/>
     </linearGradient>
-    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#f8fafc"/><stop offset="100%" stop-color="#e0f2fe"/>
-    </linearGradient>
-    <radialGradient id="orb1" cx="20%" cy="30%" r="45%"><stop offset="0%" stop-color="#0ea5e9" stop-opacity="0.35"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
-    <radialGradient id="orb2" cx="85%" cy="70%" r="40%"><stop offset="0%" stop-color="#a855f7" stop-opacity="0.3"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
-    <radialGradient id="orb3" cx="60%" cy="20%" r="30%"><stop offset="0%" stop-color="#6366f1" stop-opacity="0.25"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient>
-    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
-      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#94a3b8" stroke-width="0.6" opacity="0.12"/>
+    <radialGradient id="o1" cx="18%" cy="28%" r="42%"><stop offset="0%" stop-color="#0ea5e9" stop-opacity=".32"/><stop offset="100%" stop-color="#0ea5e9" stop-opacity="0"/></radialGradient>
+    <radialGradient id="o2" cx="88%" cy="72%" r="38%"><stop offset="0%" stop-color="#a855f7" stop-opacity=".28"/><stop offset="100%" stop-color="#a855f7" stop-opacity="0"/></radialGradient>
+    <radialGradient id="o3" cx="55%" cy="12%" r="28%"><stop offset="0%" stop-color="#6366f1" stop-opacity=".22"/><stop offset="100%" stop-color="#6366f1" stop-opacity="0"/></radialGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#94a3b8" stroke-width=".5" opacity=".1"/>
     </pattern>
-    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
-      <feGaussianBlur stdDeviation="8" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+    <filter id="glow" x="-40%" y="-40%" width="180%" height="180%" color-interpolation-filters="sRGB">
+      <feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
     </filter>
   </defs>
   <rect width="1600" height="480" fill="url(#bg)"/>
-  <rect width="1600" height="480" fill="url(#orb1)"/>
-  <rect width="1600" height="480" fill="url(#orb2)"/>
-  <rect width="1600" height="480" fill="url(#orb3)"/>
+  <rect width="1600" height="480" fill="url(#o1)"/>
+  <rect width="1600" height="480" fill="url(#o2)"/>
+  <rect width="1600" height="480" fill="url(#o3)"/>
   <rect width="1600" height="480" fill="url(#grid)"/>
-  <rect x="0" y="0" width="1600" height="3" fill="url(#accent)"/>
-  <g opacity="0.15" fill="none" stroke="#67e8f9" stroke-width="1.5">
-    <polygon points="1280,90 1320,113 1320,159 1280,182 1240,159 1240,113"/>
-    <polygon points="1380,300 1430,329 1430,387 1380,416 1330,387 1330,329"/>
+  <rect width="1600" height="2" fill="url(#accent)"/>
+  <rect y="478" width="1600" height="2" fill="url(#accent)" opacity=".55"/>
+  <g fill="none" stroke="#67e8f9" stroke-width="1.25" opacity=".12">
+    <polygon points="1260,88 1304,113 1304,163 1260,188 1216,163 1216,113"/>
+    <polygon points="1390,290 1446,322 1446,386 1390,418 1334,386 1334,322"/>
   </g>
-  <g transform="translate(120,140)" filter="url(#softGlow)">
-    <polygon points="80,0 149,40 149,120 80,160 11,120 11,40" fill="url(#accent)"/>
-    <polygon points="80,22 130,51 130,109 80,138 30,109 30,51" fill="#0B1220" opacity="0.65"/>
-    <path d="M55 52 H68 V72 H92 V52 H105 V108 H92 V86 H68 V108 H55 Z" fill="#f8fafc"/>
-    <rect x="74" y="98" width="12" height="18" rx="2" fill="#22d3ee"/>
+  <g transform="translate(130 155)" filter="url(#glow)">
+    <polygon points="72,0 134.35,36 134.35,108 72,144 9.65,108 9.65,36" fill="url(#hexFill)"/>
+    <polygon points="72,20 116.9,46 116.9,98 72,124 27.1,98 27.1,46" fill="#020617" opacity=".62"/>
+    <path d="M48 44h14v24h20V44h14v72H82V92H62v24H48z" fill="#f8fafc"/>
+    <rect x="66" y="96" width="12" height="18" rx="2.5" fill="#22d3ee"/>
   </g>
-  <text x="320" y="210" font-family="ui-sans-serif, system-ui, Segoe UI, Inter, sans-serif" font-size="72" font-weight="800" fill="url(#textGrad)" letter-spacing="-1.5">HEXVault</text>
-  <text x="320" y="268" font-family="ui-sans-serif, system-ui, Segoe UI, sans-serif" font-size="26" font-weight="500" fill="#94a3b8">Project memory that never forgets · Smart PR context</text>
-  <g font-family="ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="600">
-    <rect x="320" y="300" width="110" height="32" rx="16" fill="#0ea5e9" fill-opacity="0.15" stroke="#0ea5e9" stroke-opacity="0.4"/>
-    <text x="375" y="321" text-anchor="middle" fill="#7dd3fc">Memory</text>
-    <rect x="442" y="300" width="100" height="32" rx="16" fill="#6366f1" fill-opacity="0.15" stroke="#6366f1" stroke-opacity="0.4"/>
-    <text x="492" y="321" text-anchor="middle" fill="#a5b4fc">RAG Chat</text>
-    <rect x="554" y="300" width="100" height="32" rx="16" fill="#a855f7" fill-opacity="0.15" stroke="#a855f7" stroke-opacity="0.4"/>
-    <text x="604" y="321" text-anchor="middle" fill="#d8b4fe">Review</text>
-    <rect x="666" y="300" width="90" height="32" rx="16" fill="#22d3ee" fill-opacity="0.12" stroke="#22d3ee" stroke-opacity="0.35"/>
-    <text x="711" y="321" text-anchor="middle" fill="#a5f3fc">Graph</text>
-    <rect x="768" y="300" width="80" height="32" rx="16" fill="#38bdf8" fill-opacity="0.12" stroke="#38bdf8" stroke-opacity="0.35"/>
-    <text x="808" y="321" text-anchor="middle" fill="#bae6fd">SDKs</text>
+  <text x="310" y="205" font-family="ui-sans-serif,system-ui,Segoe UI,Inter,sans-serif" font-size="68" font-weight="800" fill="#f8fafc" letter-spacing="-1.8">HEXVault</text>
+  <text x="310" y="258" font-family="ui-sans-serif,system-ui,Segoe UI,sans-serif" font-size="24" font-weight="500" fill="#94a3b8">Project memory that never forgets · Smart PR context</text>
+  <g font-family="ui-sans-serif,system-ui,Segoe UI,sans-serif" font-size="13" font-weight="600">
+    <rect x="310" y="288" width="100" height="30" rx="15" fill="#0ea5e9" fill-opacity=".14" stroke="#38bdf8" stroke-opacity=".45"/>
+    <text x="360" y="308" text-anchor="middle" fill="#7dd3fc">Memory</text>
+    <rect x="422" y="288" width="96" height="30" rx="15" fill="#6366f1" fill-opacity=".14" stroke="#818cf8" stroke-opacity=".45"/>
+    <text x="470" y="308" text-anchor="middle" fill="#c7d2fe">RAG Chat</text>
+    <rect x="530" y="288" width="90" height="30" rx="15" fill="#a855f7" fill-opacity=".14" stroke="#c084fc" stroke-opacity=".45"/>
+    <text x="575" y="308" text-anchor="middle" fill="#e9d5ff">Review</text>
+    <rect x="632" y="288" width="82" height="30" rx="15" fill="#22d3ee" fill-opacity=".1" stroke="#22d3ee" stroke-opacity=".35"/>
+    <text x="673" y="308" text-anchor="middle" fill="#a5f3fc">Graph</text>
+    <rect x="726" y="288" width="74" height="30" rx="15" fill="#38bdf8" fill-opacity=".1" stroke="#38bdf8" stroke-opacity=".35"/>
+    <text x="763" y="308" text-anchor="middle" fill="#bae6fd">SDKs</text>
   </g>
-  <g transform="translate(1180,100)">
-    <rect x="0" y="40" width="280" height="160" rx="16" fill="#0f172a" stroke="#334155"/>
-    <rect x="16" y="56" width="248" height="12" rx="4" fill="#1e293b"/>
-    <rect x="16" y="80" width="180" height="10" rx="3" fill="#0ea5e9" opacity="0.7"/>
-    <rect x="16" y="100" width="210" height="10" rx="3" fill="#6366f1" opacity="0.55"/>
-    <rect x="16" y="120" width="140" height="10" rx="3" fill="#a855f7" opacity="0.5"/>
-    <rect x="16" y="150" width="80" height="28" rx="8" fill="url(#accent)" opacity="0.85"/>
-    <text x="56" y="169" text-anchor="middle" font-family="ui-sans-serif, system-ui, sans-serif" font-size="12" font-weight="700" fill="#0B1220">API :3850</text>
+  <g transform="translate(1175 95)">
+    <rect width="300" height="200" rx="18" fill="#0f172a" stroke="#334155"/>
+    <rect x="18" y="22" width="264" height="10" rx="3" fill="#1e293b"/>
+    <rect x="18" y="48" width="168" height="9" rx="3" fill="#0ea5e9" opacity=".75"/>
+    <rect x="18" y="68" width="220" height="9" rx="3" fill="#6366f1" opacity=".55"/>
+    <rect x="18" y="88" width="140" height="9" rx="3" fill="#a855f7" opacity=".5"/>
+    <rect x="18" y="118" width="264" height="1" fill="#1e293b"/>
+    <rect x="18" y="140" width="88" height="30" rx="9" fill="url(#accent)"/>
+    <text x="62" y="160" text-anchor="middle" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" font-weight="700" fill="#020617">API :3850</text>
+    <text x="130" y="160" font-family="ui-sans-serif,system-ui,sans-serif" font-size="12" fill="#64748b">REST · GraphQL</text>
   </g>
-  <rect x="0" y="477" width="1600" height="3" fill="url(#accent)" opacity="0.6"/>
 </svg>
