@@ -2,11 +2,10 @@
   "name": "hexvault",
   "displayName": "HEXVault",
   "description": "Project memory, search, and AI chat powered by HEXVault",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "publisher": "sawon2026",
   "license": "MIT",
   "engines": { "vscode": "^1.85.0" },
-  "categories": ["Other", "Machine Learning", "Productivity"],
   "main": "./out/extension.js",
   "activationEvents": [
     "onView:hexvault.panel",
@@ -23,11 +22,6 @@
       { "command": "hexvault.health", "title": "HEXVault: API Health" },
       { "command": "hexvault.openPanel", "title": "HEXVault: Open Panel" }
     ],
-    "menus": {
-      "editor/context": [
-        { "command": "hexvault.addSelection", "when": "editorHasSelection", "group": "hexvault@1" }
-      ]
-    },
     "viewsContainers": {
       "activitybar": [{ "id": "hexvault", "title": "HEXVault", "icon": "media/hexvault.svg" }]
     },
@@ -48,10 +42,10 @@
     "compile": "tsc -p ./",
     "build:webview": "node esbuild.webview.mjs",
     "build": "npm run build:webview && npm run compile",
-    "watch": "tsc -watch -p ./",
-    "watch:webview": "node esbuild.webview.mjs --watch"
+    "watch": "tsc -watch -p ./"
   },
   "devDependencies": {
+    "@tanstack/react-query": "^5.62.8",
     "@types/node": "^20.11.0",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",

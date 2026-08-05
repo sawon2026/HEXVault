@@ -14,20 +14,21 @@ export class HexVaultPanelProvider implements vscode.WebviewViewProvider {
     };
     webviewView.webview.html = this.html(webviewView.webview);
     webviewView.webview.onDidReceiveMessage(async (msg) => {
+      const requestId = msg?.requestId;
       try {
         if (msg.type === "search") {
           const result = await this.client.search(String(msg.query || ""));
-          webviewView.webview.postMessage({ type: "searchResult", result });
+          webviewView.webview.postMessage({ type: "searchResult", result, requestId });
         } else if (msg.type === "ask") {
           const result = await this.client.chat(String(msg.query || ""));
-          webviewView.webview.postMessage({ type: "askResult", result });
+          webviewView.webview.postMessage({ type: "askResult", result, requestId });
         } else if (msg.type === "health") {
           const result = await this.client.health();
-          webviewView.webview.postMessage({ type: "healthResult", result });
+          webviewView.webview.postMessage({ type: "healthResult", result, requestId });
         }
       } catch (err) {
         const message = err instanceof Error ? err.message : String(err);
-        webviewView.webview.postMessage({ type: "error", message });
+        webviewView.webview.postMessage({ type: "error", message, requestId });
         vscode.window.showErrorMessage(`HEXVault: ${message}`);
       }
     });

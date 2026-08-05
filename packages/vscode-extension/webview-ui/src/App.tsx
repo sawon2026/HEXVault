@@ -1,87 +1,101 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { fetchAsk, fetchHealth, fetchSearch, queryKeys } from "./api";
 
-type VsCodeApi = { postMessage: (msg: unknown) => void };
-type SearchHit = { id?: string; title?: string; type?: string; content?: string };
-type Props = { vscode: VsCodeApi };
-
-export function App({ vscode }: Props) {
+export function App() {
   const [query, setQuery] = useState("");
-  const [busy, setBusy] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  const [mode, setMode] = useState<"idle" | "search" | "ask" | "health">("idle");
-  const [hits, setHits] = useState<SearchHit[]>([]);
-  const [answer, setAnswer] = useState<string | null>(null);
-  const [health, setHealth] = useState<string | null>(null);
+  const [submitted, setSubmitted] = useState("");
+  const [mode, setMode] = useState<"search" | "ask" | "health" | null>(null);
+  const qc = useQueryClient();
 
-  useEffect(() => {
-    const handler = (event: MessageEvent) => {
-      const msg = event.data;
-      setBusy(false);
-      if (msg?.type === "error") {
-        setError(String(msg.message || "Error"));
-        return;
-      }
-      setError(null);
-      if (msg?.type === "searchResult") {
-        setMode("search");
-        setHits(msg.result?.results || []);
-        setAnswer(null);
-        setHealth(null);
-      } else if (msg?.type === "askResult") {
-        setMode("ask");
-        const r = msg.result || {};
-        setAnswer((r.answer || "(no answer)") + (r.source ? `\n\n— ${r.source}` : ""));
-        setHits([]);
-        setHealth(null);
-      } else if (msg?.type === "healthResult") {
-        setMode("health");
-        setHealth(JSON.stringify(msg.result, null, 2));
-        setHits([]);
-        setAnswer(null);
-      }
-    };
-    window.addEventListener("message", handler);
-    return () => window.removeEventListener("message", handler);
-  }, []);
+  const healthQuery = useQuery({
+    queryKey: queryKeys.health,
+    queryFn: fetchHealth,
+    enabled: mode === "health",
+    staleTime: 30_000,
+    gcTime: 5 * 60_000,
+  });
 
-  const send = (type: string) => {
+  const searchQuery = useQuery({
+    queryKey: queryKeys.search(submitted),
+    queryFn: () => fetchSearch(submitted),
+    enabled: mode === "search" && submitted.length > 0,
+    staleTime: 60_000,
+    gcTime: 10 * 60_000,
+  });
+
+  const askMutation = useMutation({
+    mutationFn: (q: string) => fetchAsk(q),
+  });
+
+  const busy =
+    (mode === "search" && searchQuery.isFetching) ||
+    (mode === "health" && healthQuery.isFetching) ||
+    askMutation.isPending;
+
+  const error =
+    (mode === "search" && searchQuery.error?.message) ||
+    (mode === "health" && healthQuery.error?.message) ||
+    (mode === "ask" && askMutation.error?.message) ||
+    null;
+
+  const onSearch = () => {
     const q = query.trim();
-    if ((type === "search" || type === "ask") && !q) return;
-    setBusy(true);
-    setError(null);
-    vscode.postMessage({ type, query: q });
+    if (!q) return;
+    setMode("search");
+    setSubmitted(q);
   };
+
+  const onAsk = () => {
+    const q = query.trim();
+    if (!q) return;
+    setMode("ask");
+    askMutation.mutate(q);
+  };
+
+  const onHealth = () => {
+    setMode("health");
+    void qc.invalidateQueries({ queryKey: queryKeys.health });
+  };
+
+  const hits = searchQuery.data?.results || [];
+  const answer = askMutation.data
+    ? `${askMutation.data.answer || "(no answer)"}${askMutation.data.source ? `\n\n— ${askMutation.data.source}` : ""}`
+    : null;
+  const healthText = healthQuery.data ? JSON.stringify(healthQuery.data, null, 2) : null;
+
+  const fromCache =
+    mode === "search" && searchQuery.isSuccess && !searchQuery.isFetching
+      ? searchQuery.isStale ? "stale cache" : "cache hit"
+      : mode === "health" && healthQuery.isSuccess && !healthQuery.isFetching
+        ? healthQuery.isStale ? "stale cache" : "cache hit"
+        : null;
 
   return (
     <div className="app">
       <header className="header">
         <h2>HEXVault</h2>
-        <p className="muted">Search · Ask · Health</p>
+        <p className="muted">TanStack Query cache · Search · Ask · Health</p>
       </header>
       <div className="row">
         <input
           className="input"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && send("search")}
-          placeholder="Search memories or ask a question…"
+          onKeyDown={(e) => e.key === "Enter" && onSearch()}
+          placeholder="Search memories or ask…"
           disabled={busy}
         />
       </div>
       <div className="row actions">
-        <button className="btn primary" disabled={busy} onClick={() => send("search")}>
-          Search
-        </button>
-        <button className="btn primary" disabled={busy} onClick={() => send("ask")}>
-          Ask
-        </button>
-        <button className="btn secondary" disabled={busy} onClick={() => send("health")}>
-          Health
-        </button>
+        <button className="btn primary" disabled={busy} onClick={onSearch}>Search</button>
+        <button className="btn primary" disabled={busy} onClick={onAsk}>Ask</button>
+        <button className="btn secondary" disabled={busy} onClick={onHealth}>Health</button>
       </div>
+      {fromCache && <div className="cache-badge">📦 {fromCache}</div>}
       {busy && <div className="status">Working…</div>}
       {error && <div className="error">{error}</div>}
-      {mode === "search" && !busy && (
+      {mode === "search" && !busy && searchQuery.isSuccess && (
         <section className="results">
           {hits.length === 0 ? (
             <p className="muted">No results.</p>
@@ -99,14 +113,10 @@ export function App({ vscode }: Props) {
         </section>
       )}
       {mode === "ask" && answer && !busy && (
-        <section className="card answer">
-          <pre>{answer}</pre>
-        </section>
+        <section className="card answer"><pre>{answer}</pre></section>
       )}
-      {mode === "health" && health && !busy && (
-        <section className="card">
-          <pre>{health}</pre>
-        </section>
+      {mode === "health" && healthText && !busy && (
+        <section className="card"><pre>{healthText}</pre></section>
       )}
     </div>
   );
