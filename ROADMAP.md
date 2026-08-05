@@ -2,11 +2,10 @@
 
 ## Shipped
 - [x] v1.x core platform
-- [x] v2.0 TypeScript SDK
-- [x] v2.1 GraphQL + Python SDK
-- [x] v2.2 Go SDK
+- [x] v2.0–2.2 SDKs (TS/Python/Go) + GraphQL
+- [x] v2.3 Sync export/import + CI coverage job
 
 ## Next
-- [ ] Team cloud sync
-- [ ] Coverage continuous >70%
+- [ ] Live remote pull/push sync protocol
+- [ ] Coverage hard gate ≥70%
 - [ ] Dashboard UI/UX polish
