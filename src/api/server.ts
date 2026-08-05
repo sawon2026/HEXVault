@@ -1,5 +1,5 @@
 /**
- * HEXVault REST API v1.3.1
+ * HEXVault REST + GraphQL API v2.1.0
  */
 import http from "http";
 import { URL } from "url";
@@ -13,6 +13,8 @@ import { generateCommitMessage, generateReleaseNotes } from "../core/ai/generato
 import { repoChat } from "../core/ai/repo-chat.js";
 import { analyzeProject } from "../core/analysis/heuristics.js";
 import { buildKnowledgeGraph, layoutGraph } from "../core/graph/builder.js";
+import { executeGraphql, GRAPHQL_SCHEMA_SDL } from "./graphql.js";
+import { MultiRepoLinker } from "../core/multi-repo/linker.js";
 
 const logger = log.child("api");
 
@@ -72,7 +74,7 @@ export function createApiServer(opts: ApiServerOptions = {}) {
       const p = url.pathname.replace(/\/$/, "") || "/";
 
       if (req.method === "GET" && (p === "/health" || p === "/v1/health")) {
-        json(res, 200, { ok: true, service: "hexvault-api", version: "1.3.1" });
+        json(res, 200, { ok: true, service: "hexvault-api", version: "2.1.0" });
         return;
       }
       if (req.method === "GET" && p === "/v1/memories") {
@@ -135,17 +137,42 @@ export function createApiServer(opts: ApiServerOptions = {}) {
         const limit = Number(url.searchParams.get("limit") || 60);
         const memories = engine.list(limit);
         const graph = buildKnowledgeGraph(memories, { maxMemories: limit });
-        const w = Number(url.searchParams.get("w") || 900);
-        const h = Number(url.searchParams.get("h") || 600);
-        const laid = layoutGraph(graph, w, h);
+        const laid = layoutGraph(graph, Number(url.searchParams.get("w") || 900), Number(url.searchParams.get("h") || 600));
         json(res, 200, { ...laid, stats: graph.stats });
         return;
       }
-      if (req.method === "GET" && p === "/v1/analyze") {
-        const report = await analyzeProject({
-          cwd,
-          topN: Number(url.searchParams.get("top") || 15),
+      if ((req.method === "POST" || req.method === "GET") && (p === "/graphql" || p === "/v1/graphql")) {
+        if (req.method === "GET") {
+          json(res, 200, { schema: GRAPHQL_SCHEMA_SDL, note: "POST { query, variables } to execute" });
+          return;
+        }
+        const body = JSON.parse((await readBody(req)) || "{}");
+        json(res, 200, await executeGraphql(engine, body));
+        return;
+      }
+      if (req.method === "GET" && p === "/v1/multi-repo/search") {
+        const q = url.searchParams.get("q") || "";
+        if (!q) throw new AppError("CONFIG_INVALID", "q is required", { statusCode: 400 });
+        const linker = new MultiRepoLinker();
+        linker.loadFromConfig(path.join(cwd, ".hexvault", "multi-repo.json"));
+        const hits = linker.searchAll(q, Number(url.searchParams.get("limit") || 15));
+        linker.close();
+        json(res, 200, {
+          query: q,
+          count: hits.length,
+          results: hits.map((h) => ({
+            repo: h.repo,
+            id: h.entry.id,
+            title: h.entry.title,
+            type: h.entry.type,
+            score: h.score,
+            content: h.entry.content,
+          })),
         });
+        return;
+      }
+      if (req.method === "GET" && p === "/v1/analyze") {
+        const report = await analyzeProject({ cwd, topN: Number(url.searchParams.get("top") || 15) });
         json(res, 200, {
           filesScanned: report.filesScanned,
           summary: report.summary,
@@ -199,6 +226,8 @@ export function createApiServer(opts: ApiServerOptions = {}) {
           "GET|POST /v1/memories",
           "GET /v1/search?q=",
           "GET /v1/graph",
+          "POST /graphql",
+          "GET /v1/multi-repo/search",
           "GET /v1/analyze",
           "POST /v1/review",
           "POST /v1/chat",
